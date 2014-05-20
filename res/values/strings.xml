@@ -5,5 +5,7 @@
     <string name="title_search">Búsqueda</string>
     <string name="title_map">Mapa</string>
     <string name="action_settings">Preferencias</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

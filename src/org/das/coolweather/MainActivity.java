@@ -3,10 +3,19 @@ package org.das.coolweather;
 import java.util.Locale;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -190,12 +199,77 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 						.findViewById(R.id.section_label);
 				textView.setText(Integer.toString(getArguments().getInt(
 						ARG_SECTION_NUMBER)));
+				
 			} else {
 				rootView = inflater.inflate(R.layout.map, container,
 						false);
 				
 				theMap = ((SupportMapFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.elmapa)).getMap();
 				theMap.setMyLocationEnabled(true);
+				
+				theMap.setOnMapClickListener(new OnMapClickListener() {
+					
+					@Override
+					public void onMapClick(LatLng point) {
+						theMap.addMarker(new MarkerOptions()
+						.position(point)
+						.draggable(true)
+						.title("Descripción del marcador"));
+						
+					}
+				});
+				
+//				theMap.setOnMapLongClickListener(new OnMapLongClickListener() {
+//					
+//					@Override
+//					public void onMapLongClick(LatLng point) {
+//						theMap.addMarker(new MarkerOptions()
+//						.position(point)
+//						.title("Descripción del marcador"));
+//						
+//					}
+//				});
+				theMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+					
+					@Override
+					public void onInfoWindowClick(Marker marker) {
+						Intent i = new Intent(getActivity().getApplicationContext(), 
+								DetailsActivity.class);
+						
+					}
+				});
+				theMap.setOnMarkerClickListener(new OnMarkerClickListener() {
+					
+					@Override
+					public boolean onMarkerClick(Marker marker) {
+						marker.setTitle("hola soy el " + marker.getId());
+						marker.showInfoWindow();
+						return false;
+					}
+				});
+				
+				
+				theMap.setOnMarkerDragListener(new OnMarkerDragListener() {
+					
+					@Override
+					public void onMarkerDragStart(Marker marker) {
+						marker.remove();
+						
+					}
+
+					@Override
+					public void onMarkerDrag(Marker marker) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void onMarkerDragEnd(Marker marker) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+				});
 			}
 			
 			return rootView;
