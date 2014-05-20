@@ -2,13 +2,16 @@ package org.das.coolweather;
 
 import java.util.Locale;
 
-import android.app.Activity;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+
 import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,7 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class MainActivity extends Activity implements ActionBar.TabListener {
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -27,7 +30,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 	 * {@link android.support.v13.app.FragmentStatePagerAdapter}.
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
-	static boolean holaMundo = false;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -45,7 +47,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -141,9 +143,9 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.title_section1).toUpperCase(l);
+				return getString(R.string.title_search).toUpperCase(l);
 			case 1:
-				return getString(R.string.title_section2).toUpperCase(l);
+				return getString(R.string.title_map).toUpperCase(l);
 			}
 			return null;
 		}
@@ -158,7 +160,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		 * fragment.
 		 */
 		private static final String ARG_SECTION_NUMBER = "section_number";
-
+		private GoogleMap theMap;
 		/**
 		 * Returns a new instance of this fragment for the given section number.
 		 */
@@ -177,7 +179,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = null;
-			if(!holaMundo) {
+			
+			
+			if(getArguments().getInt(
+					ARG_SECTION_NUMBER) == 1) {
 				
 				rootView = inflater.inflate(R.layout.fragment_main, container,
 					false);
@@ -185,11 +190,14 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 						.findViewById(R.id.section_label);
 				textView.setText(Integer.toString(getArguments().getInt(
 						ARG_SECTION_NUMBER)));
-				holaMundo = true;
 			} else {
-				rootView = inflater.inflate(R.layout.test, container,
+				rootView = inflater.inflate(R.layout.map, container,
 						false);
+				
+				theMap = ((SupportMapFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.elmapa)).getMap();
+				theMap.setMyLocationEnabled(true);
 			}
+			
 			return rootView;
 		}
 	}
