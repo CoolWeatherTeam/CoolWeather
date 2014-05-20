@@ -1,0 +1,20 @@
+OBLIGATORIAS
+
+Mapa (pestañas superiores) se abre mundo y tener botón de ubicación actual
+En los detalles del tiempo poner icono
+Preferencias (Frecuencia de actualización, si quieres recibir notis)
+Notificaciones
+API externa (openWeatherMap.org)
+Base de datos local
+Spinner para elegir frecuencia de actualización
+Fragments (el mapa)
+Compartir típica de Android (solo el texto) ? ShareActionProvider
+Widget(que se actualice cada media hora, y cuando pinches en el widget te lleve a la ciudad que has pinchado)
+
+
+
+
+FUNCIONALIDAD EXTRAS
+Exportar el json (Comprobar que la constructora no casque)
+Juego de huevos de pascua
+Mostrar histórico en un grafico con pestañas de 
