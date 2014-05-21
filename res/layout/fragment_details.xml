@@ -8,12 +8,70 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.das.coolweather.DetailsActivity$PlaceholderFragment" >
 
-    <Button
-        android:id="@+id/borrarMarker"
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="Borrar Marker" />
+        android:layout_marginRight="76dp" >
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imgIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/relativeLayout1"
+        android:layout_alignTop="@+id/relativeLayout1"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/txtCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgIcon"
+        android:layout_marginLeft="25dp"
+        android:layout_toRightOf="@+id/txtTemperature"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/txtTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/scrollView1"
+        android:layout_below="@+id/txtCity"
+        android:layout_marginTop="46dp"
+        android:text="@string/temperature" />
+
+    <TextView
+        android:id="@+id/txtHumidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/txtTemperature"
+        android:layout_below="@+id/txtTemperature"
+        android:layout_marginTop="36dp"
+        android:text="@string/humidity" />
+
+    <TextView
+        android:id="@+id/txtResultHum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txtHumidity"
+        android:layout_toRightOf="@+id/txtCity"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/txtResultTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtHumidity"
+        android:layout_toRightOf="@+id/txtCity"
+        android:text="TextView" />
 
 </RelativeLayout>

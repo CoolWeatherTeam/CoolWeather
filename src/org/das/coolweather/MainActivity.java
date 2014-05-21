@@ -12,11 +12,21 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+//import com.survivingwithandroid.weatherapp.JSONWeatherParser;
+//import com.survivingwithandroid.weatherapp.WeatherHttpClient;
+
+
+import org.das.coolweather.Location;
+import org.das.coolweather.Weather;
+import org.json.JSONException;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -203,6 +213,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 				edtSearchTerm= (EditText) rootView.findViewById(R.id.edtSearchTerm);
 				btnSearchTerm = (Button) rootView.findViewById(R.id.btnSearch);
 				
+				btnSearchTerm.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View arg0) {
+						Intent intentDetails = new Intent(getActivity(), DetailsActivity.class);
+						intentDetails.putExtra("City", edtSearchTerm.getText().toString());
+						startActivity(intentDetails);
+						
+					}
+				});
+				
 			} else {
 				rootView = inflater.inflate(R.layout.map, container,
 						false);
@@ -256,20 +277,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					
 					@Override
 					public void onMarkerDragStart(Marker marker) {
-						marker.remove();
-						
+						marker.remove();	
 					}
 
 					@Override
 					public void onMarkerDrag(Marker marker) {
 						// TODO Auto-generated method stub
-						
 					}
 
 					@Override
 					public void onMarkerDragEnd(Marker marker) {
 						// TODO Auto-generated method stub
-						
 					}
 					
 				});
@@ -278,5 +296,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			return rootView;
 		}
 	}
+	
+	
 
 }

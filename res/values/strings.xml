@@ -11,4 +11,7 @@
     
     <string name="txtSearchTerm"> Introduzca la búsqueda que quiere realizar:</string>
 	<string name="butSearchTerm"> BUSCAR</string>
+	
+	<string name="temperature"> <b>Temperatura</b></string>
+	<string name="humidity"> <b>Humedad</b></string>
 </resources>
