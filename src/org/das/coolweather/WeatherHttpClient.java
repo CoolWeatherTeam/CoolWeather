@@ -1,81 +1,85 @@
 package org.das.coolweather;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.google.android.gms.maps.model.LatLng;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
 public class WeatherHttpClient {
 
-	private static String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
-	private static String IMG_URL = "http://openweathermap.org/img/w/";
-
+	private static HttpParams httpParameters;
+	private static HttpResponse response;
+	private static HttpClient httpclient;
+	private static HttpGet httpget;
+	private static HttpEntity entity;
+	private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
 	
-	public String getWeatherData(String location) {
-		HttpURLConnection con = null ;
-		InputStream is = null;
 
+	public static JSONObject getDataFromLocation(LatLng latLong) {
+		httpParameters = new BasicHttpParams();
+		httpclient = new DefaultHttpClient(httpParameters);
+		HttpConnectionParams.setConnectionTimeout(httpParameters, 15000);
+		HttpConnectionParams.setSoTimeout(httpParameters, 15000);
 		try {
-			con = (HttpURLConnection) ( new URL(BASE_URL + location)).openConnection();
-			con.setRequestMethod("GET");
-			con.setDoInput(true);
-			con.setDoOutput(true);
-			con.connect();
-			
-			// Let's read the response
-			StringBuffer buffer = new StringBuffer();
-			is = con.getInputStream();
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-			String line = null;
-			while (  (line = br.readLine()) != null )
-				buffer.append(line + "\r\n");
-			
-			is.close();
-			con.disconnect();
-			return buffer.toString();
-	    }
-		catch(Throwable t) {
-			t.printStackTrace();
-		}
-		finally {
-			try { is.close(); } catch(Throwable t) {}
-			try { con.disconnect(); } catch(Throwable t) {}
-		}
+			return new AsyncTask<LatLng, Void, JSONObject>() {
 
-		return null;
+				@Override
+				protected JSONObject doInBackground(LatLng... params) {
+					try {
+						String lat = params[0].latitude+"";
+						String lon = params[0].longitude+"";
+						String mode = "json";
+						httpget = new HttpGet(BASE_URL+"lat="+lat+"&lon="+lon+"&mode="+mode+"&units=metric");
+						response = httpclient.execute(httpget);
+						entity = response.getEntity();
+						String result = EntityUtils.toString(entity);
+						JSONObject data = new JSONObject(result);
+						return data;
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					} catch (ClientProtocolException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					return null;
+				}
 				
-	}
-	
-	public byte[] getImage(String code) {
-		HttpURLConnection con = null ;
-		InputStream is = null;
-		try {
-			con = (HttpURLConnection) ( new URL(IMG_URL + code)).openConnection();
-			con.setRequestMethod("GET");
-			con.setDoInput(true);
-			con.setDoOutput(true);
-			con.connect();
-			
-			// Let's read the response
-			is = con.getInputStream();
-			byte[] buffer = new byte[1024];
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			
-			while ( is.read(buffer) != -1)
-				baos.write(buffer);
-			
-			return baos.toByteArray();
-	    }
-		catch(Throwable t) {
-			t.printStackTrace();
+			}.execute(latLong).get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
 		}
-		finally {
-			try { is.close(); } catch(Throwable t) {}
-			try { con.disconnect(); } catch(Throwable t) {}
-		}
-		
 		return null;
 		
 	}

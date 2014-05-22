@@ -2,6 +2,10 @@ package org.das.coolweather;
 
 import java.util.Locale;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
@@ -15,15 +19,34 @@ import com.google.android.gms.maps.model.MarkerOptions;
 //import com.survivingwithandroid.weatherapp.WeatherHttpClient;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.VoicemailContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +54,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -226,24 +250,29 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					
 					@Override
 					public void onMapClick(LatLng point) {
-						theMap.addMarker(new MarkerOptions()
-						.position(point)
-						.draggable(true)
-						.title("Descripción del marcador"));
+						JSONObject data = WeatherHttpClient.getDataFromLocation(point);
+						try {
+							JSONArray prediction = data.getJSONArray("list");
+							String ciudad = data.getJSONObject("city").getString("name"), 
+								pais = data.getJSONObject("city").getString("country");
+							int max = prediction.getJSONObject(0).getJSONObject("temp").getInt("max");
+							int min = prediction.getJSONObject(0).getJSONObject("temp").getInt("min");
+							
+							theMap.addMarker(new MarkerOptions()
+							.position(point)
+							.draggable(true)
+							.title(ciudad + ", " + pais)
+							.snippet("Max: " + max + "\n Min: " + min));
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						//Log.i("info", data.toString());
 						
 					}
 				});
 				
-//				theMap.setOnMapLongClickListener(new OnMapLongClickListener() {
-//					
-//					@Override
-//					public void onMapLongClick(LatLng point) {
-//						theMap.addMarker(new MarkerOptions()
-//						.position(point)
-//						.title("Descripción del marcador"));
-//						
-//					}
-//				});
+
 				theMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 					
 					@Override
@@ -251,13 +280,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 						Intent i = new Intent(getActivity().getApplicationContext(), 
 								DetailsActivity.class);
 						
+						
 					}
 				});
 				theMap.setOnMarkerClickListener(new OnMarkerClickListener() {
 					
 					@Override
 					public boolean onMarkerClick(Marker marker) {
-						marker.setTitle("hola soy el " + marker.getId());
 						marker.showInfoWindow();
 						return false;
 					}
@@ -268,17 +297,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					
 					@Override
 					public void onMarkerDragStart(Marker marker) {
-						marker.remove();	
+						
+						Toast.makeText(getActivity(), "Marker en la posicion " + 
+								marker.getPosition().toString() + " borrado", 
+								Toast.LENGTH_LONG).show();
+						marker.remove();
 					}
 
 					@Override
 					public void onMarkerDrag(Marker marker) {
-						// TODO Auto-generated method stub
 					}
 
 					@Override
 					public void onMarkerDragEnd(Marker marker) {
-						// TODO Auto-generated method stub
 					}
 					
 				});
