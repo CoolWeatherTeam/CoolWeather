@@ -1,6 +1,7 @@
 package org.das.coolweather;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -10,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,11 +24,20 @@ import android.os.Build;
 
 public class DetailsActivity extends Activity {
 
+	private JSONObject data;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_details);
 
+		try {
+			data = new JSONObject(getIntent().getStringExtra("JSON_DATA"));
+			Log.i("JSON", data.toString());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
 		}

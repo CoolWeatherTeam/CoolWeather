@@ -15,33 +15,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-//import com.survivingwithandroid.weatherapp.JSONWeatherParser;
-//import com.survivingwithandroid.weatherapp.WeatherHttpClient;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.VoicemailContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -200,6 +179,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		private GoogleMap theMap;
 		private EditText edtSearchTerm;
 		private Button btnSearchTerm;
+		private JSONObject mapData;
 		/**
 		 * Returns a new instance of this fragment for the given section number.
 		 */
@@ -250,11 +230,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					
 					@Override
 					public void onMapClick(LatLng point) {
-						JSONObject data = WeatherHttpClient.getDataFromLocation(point);
+						mapData = WeatherHttpClient.getDataFromLocation("lat="+point.latitude + "&lon=" + point.longitude);
 						try {
-							JSONArray prediction = data.getJSONArray("list");
-							String ciudad = data.getJSONObject("city").getString("name"), 
-								pais = data.getJSONObject("city").getString("country");
+							JSONArray prediction = mapData.getJSONArray("list");
+							String ciudad = mapData.getJSONObject("city").getString("name"), 
+								pais = mapData.getJSONObject("city").getString("country");
 							int max = prediction.getJSONObject(0).getJSONObject("temp").getInt("max");
 							int min = prediction.getJSONObject(0).getJSONObject("temp").getInt("min");
 							
@@ -279,7 +259,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					public void onInfoWindowClick(Marker marker) {
 						Intent i = new Intent(getActivity().getApplicationContext(), 
 								DetailsActivity.class);
-						
+						i.putExtra("JSON_DATA", mapData.toString());
+						startActivity(i);
 						
 					}
 				});

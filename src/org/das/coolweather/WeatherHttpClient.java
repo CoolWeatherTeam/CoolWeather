@@ -39,24 +39,21 @@ public class WeatherHttpClient {
 	private static HttpClient httpclient;
 	private static HttpGet httpget;
 	private static HttpEntity entity;
-	private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?";
+	private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?units=metric&";
 	
 
-	public static JSONObject getDataFromLocation(LatLng latLong) {
+	public static JSONObject getDataFromLocation(String optionString) {
 		httpParameters = new BasicHttpParams();
 		httpclient = new DefaultHttpClient(httpParameters);
 		HttpConnectionParams.setConnectionTimeout(httpParameters, 15000);
 		HttpConnectionParams.setSoTimeout(httpParameters, 15000);
 		try {
-			return new AsyncTask<LatLng, Void, JSONObject>() {
+			return new AsyncTask<String, Void, JSONObject>() {
 
 				@Override
-				protected JSONObject doInBackground(LatLng... params) {
+				protected JSONObject doInBackground(String... params) {
 					try {
-						String lat = params[0].latitude+"";
-						String lon = params[0].longitude+"";
-						String mode = "json";
-						httpget = new HttpGet(BASE_URL+"lat="+lat+"&lon="+lon+"&mode="+mode+"&units=metric");
+						httpget = new HttpGet(BASE_URL + params[0]);
 						response = httpclient.execute(httpget);
 						entity = response.getEntity();
 						String result = EntityUtils.toString(entity);
@@ -74,7 +71,7 @@ public class WeatherHttpClient {
 					return null;
 				}
 				
-			}.execute(latLong).get();
+			}.execute(optionString+"&mode=json").get();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
