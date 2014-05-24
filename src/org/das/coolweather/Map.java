@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
@@ -14,6 +15,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -47,27 +49,36 @@ public class Map extends Fragment {
 			
 			@Override
 			public void onMapClick(LatLng point) {
-				mapData = WeatherHttpClient.getDataFromLocation("lat="+point.latitude + "&lon=" + point.longitude);
+				theMap.addMarker(new MarkerOptions()
+				.position(point)
+				.draggable(true));
+				LaBD.getMiBD(getActivity()).addMarker(point.latitude, point.longitude);
+			}
+		});
+		
+		theMap.setOnMarkerClickListener(new OnMarkerClickListener() {
+			
+			@Override
+			public boolean onMarkerClick(Marker marker) {
 				try {
+					mapData = WeatherHttpClient.
+							getDataFromLocation(
+									"lat="+ marker.getPosition().latitude + 
+									"&lon=" + marker.getPosition().longitude);
 					JSONArray prediction = mapData.getJSONArray("list");
 					String ciudad = mapData.getJSONObject("city").getString("name"), 
 						pais = mapData.getJSONObject("city").getString("country");
 					int max = prediction.getJSONObject(0).getJSONObject("temp").getInt("max");
 					int min = prediction.getJSONObject(0).getJSONObject("temp").getInt("min");
 					
-					theMap.addMarker(new MarkerOptions()
-					.position(point)
-					.draggable(true)
-					.title(ciudad + ", " + pais)
-					.snippet("Max: " + max + "\n Min: " + min));
-				} catch (JSONException e) {
+					marker.setTitle(ciudad + ", " + pais);
+					marker.setSnippet("Max: " + max + "\n Min: " + min);
+				} catch(JSONException e) {
 					e.printStackTrace();
 				}
-				//Log.i("info", data.toString());
-				
+				return false;
 			}
 		});
-		
 
 		theMap.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 			
@@ -90,6 +101,9 @@ public class Map extends Fragment {
 				Toast.makeText(getActivity(), "Marker en la posicion " + 
 						marker.getPosition().toString() + " borrado", 
 						Toast.LENGTH_LONG).show();
+				LaBD.getMiBD(getActivity())
+					.removeMarker(marker.getPosition().latitude, 
+							marker.getPosition().longitude);
 				marker.remove();
 			}
 
@@ -105,5 +119,20 @@ public class Map extends Fragment {
 		
 		return rootView;
 	}
+
+	@Override
+	public void onResume() {		
+		super.onResume();
+		Cursor aCursor = LaBD.getMiBD(getActivity()).getMarkers();
+		if(aCursor.moveToFirst()){
+			do {
+				theMap.addMarker(new MarkerOptions()
+				.position(new LatLng(aCursor.getDouble(0), aCursor.getDouble(1)))
+				.draggable(true));
+			} while(aCursor.moveToNext());
+		}
+	}
+	
+	
 
 }
