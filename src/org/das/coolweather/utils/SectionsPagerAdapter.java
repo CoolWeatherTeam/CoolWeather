@@ -1,6 +1,11 @@
-package org.das.coolweather;
+package org.das.coolweather.utils;
 
 import java.util.Locale;
+
+import org.das.coolweather.R;
+import org.das.coolweather.R.string;
+import org.das.coolweather.fragments.Map;
+import org.das.coolweather.fragments.Search;
 
 import android.content.Context;
 import android.content.res.Resources;

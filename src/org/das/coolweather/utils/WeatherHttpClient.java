@@ -1,4 +1,4 @@
-package org.das.coolweather;
+package org.das.coolweather.utils;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

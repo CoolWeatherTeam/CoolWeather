@@ -1,5 +1,9 @@
-package org.das.coolweather;
+package org.das.coolweather.activities;
 
+import org.das.coolweather.R;
+import org.das.coolweather.R.id;
+import org.das.coolweather.R.layout;
+import org.das.coolweather.R.menu;
 import org.json.JSONException;
 import org.json.JSONObject;
 

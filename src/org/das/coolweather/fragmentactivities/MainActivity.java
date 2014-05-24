@@ -1,7 +1,12 @@
-package org.das.coolweather;
+package org.das.coolweather.fragmentactivities;
 
 import java.util.Locale;
 
+import org.das.coolweather.R;
+import org.das.coolweather.R.id;
+import org.das.coolweather.R.layout;
+import org.das.coolweather.R.menu;
+import org.das.coolweather.utils.SectionsPagerAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,5 +1,11 @@
-package org.das.coolweather;
+package org.das.coolweather.fragments;
 
+import org.das.coolweather.R;
+import org.das.coolweather.R.id;
+import org.das.coolweather.R.layout;
+import org.das.coolweather.activities.DetailsActivity;
+import org.das.coolweather.utils.LaBD;
+import org.das.coolweather.utils.WeatherHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

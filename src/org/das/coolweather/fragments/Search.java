@@ -1,4 +1,9 @@
-package org.das.coolweather;
+package org.das.coolweather.fragments;
+
+import org.das.coolweather.R;
+import org.das.coolweather.R.id;
+import org.das.coolweather.R.layout;
+import org.das.coolweather.activities.DetailsActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
