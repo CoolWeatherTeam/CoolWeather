@@ -138,7 +138,5 @@ public class Map extends Fragment {
 			} while(aCursor.moveToNext());
 		}
 	}
-	
-	
 
 }

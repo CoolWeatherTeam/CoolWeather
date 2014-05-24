@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference 
+        android:entries="@array/valores" 
+        android:entryValues="@array/codigos" 
+        android:summary="Seleccion que tipo de grados quieres visualizar" 
+        android:key="TEMPERATURE" android:title="Tipo de grados" 
+        android:defaultValue="metric"/>
+    <Preference android:title="Vaciar favoritos"
+                android:key="button"
+                android:summary="Pinche para borrar los favoritos"/>
+</PreferenceScreen>

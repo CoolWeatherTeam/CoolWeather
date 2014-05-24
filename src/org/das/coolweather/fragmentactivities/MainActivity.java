@@ -6,6 +6,7 @@ import org.das.coolweather.R;
 import org.das.coolweather.R.id;
 import org.das.coolweather.R.layout;
 import org.das.coolweather.R.menu;
+import org.das.coolweather.activities.SettingsActivity;
 import org.das.coolweather.utils.SectionsPagerAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -112,7 +113,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
-			return true;
+			Intent i = new Intent(this, SettingsActivity.class);
+			startActivity(i);
 		}
 		return super.onOptionsItemSelected(item);
 	}

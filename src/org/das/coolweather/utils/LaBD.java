@@ -84,4 +84,8 @@ public class LaBD extends SQLiteOpenHelper{
 				new String[]{String.valueOf(lat), String.valueOf(lon)});
 	}
 	
+	public void vaciar() {
+		db.delete("markers", null, null);
+	}
+	
 }

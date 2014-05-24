@@ -33,28 +33,28 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class WeatherHttpClient {
-	private static HttpParams httpParameters;
-	private static HttpResponse response;
-	private static HttpClient httpclient;
-	private static HttpGet httpget;
-	private static HttpEntity entity;
-	private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?units=metric&";
+	public static String UNITS;
+	private static final String APPID = "670d7fd5ed6be7af97f71f698ba1aad2";
+	private static final String MODE = "json";
+	private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?APPID="+APPID+"&";
 	
 
 	public static JSONObject getDataFromLocation(String optionString) {
-		httpParameters = new BasicHttpParams();
-		httpclient = new DefaultHttpClient(httpParameters);
-		HttpConnectionParams.setConnectionTimeout(httpParameters, 15000);
-		HttpConnectionParams.setSoTimeout(httpParameters, 15000);
+		
 		try {
 			return new AsyncTask<String, Void, JSONObject>() {
 
 				@Override
 				protected JSONObject doInBackground(String... params) {
 					try {
-						httpget = new HttpGet(BASE_URL + params[0]);
-						response = httpclient.execute(httpget);
-						entity = response.getEntity();
+						HttpParams httpParameters = new BasicHttpParams();
+						HttpClient httpclient = new DefaultHttpClient(httpParameters);
+						HttpConnectionParams.setConnectionTimeout(httpParameters, 15000);
+						HttpConnectionParams.setSoTimeout(httpParameters, 15000);
+						
+						HttpGet httpget = new HttpGet(BASE_URL + params[0]);
+						HttpResponse response = httpclient.execute(httpget);
+						HttpEntity entity = response.getEntity();
 						String result = EntityUtils.toString(entity);
 						JSONObject data = new JSONObject(result);
 						return data;
@@ -70,7 +70,7 @@ public class WeatherHttpClient {
 					return null;
 				}
 				
-			}.execute(optionString+"&mode=json").get();
+			}.execute(optionString+"&mode=" + MODE + "&units="+UNITS).get();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
