@@ -47,6 +47,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.das.coolweather.MainActivity" />
         </activity>
+        <activity
+            android:name="org.das.coolweather.Map"
+            android:label="@string/title_activity_map" >
+        </activity>
+        <activity
+            android:name="org.das.coolweather.Search"
+            android:label="@string/title_activity_search" >
+        </activity>
     </application>
 
 </manifest>

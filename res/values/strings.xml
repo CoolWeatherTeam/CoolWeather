@@ -7,11 +7,11 @@
     <string name="action_settings">Preferencias</string>
     <string name="title_activity_details">DetailsActivity</string>
     <string name="hello_world">Hello world!</string>
-    
-    
     <string name="txtSearchTerm"> Introduzca la búsqueda que quiere realizar:</string>
-	<string name="butSearchTerm"> BUSCAR</string>
-	
-	<string name="temperature"> <b>Temperatura</b></string>
-	<string name="humidity"> <b>Humedad</b></string>
+    <string name="butSearchTerm"> BUSCAR</string>
+    <string name="temperature"><b>Temperatura</b></string>
+    <string name="humidity"><b>Humedad</b></string>
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_search">Search</string>
+
 </resources>
