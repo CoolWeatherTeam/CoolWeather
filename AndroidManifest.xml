@@ -55,6 +55,7 @@
             android:name="org.das.coolweather.fragments.Search"
             android:label="@string/title_activity_search" >
         </activity>
+        <activity android:name=".activities.SettingsActivity"></activity>
     </application>
 
 </manifest>

@@ -12,11 +12,12 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.util.Log;
 
 public class SettingsActivity extends Activity {
 
-	private static final String TEMPERATURE = "TEMPERATURE";
-	private static final String EMPTY_DB = "button";
+	public static final String TEMPERATURE = "TEMPERATURE";
+	public static final String EMPTY_DB = "button";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

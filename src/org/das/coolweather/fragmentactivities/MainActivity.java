@@ -1,45 +1,21 @@
 package org.das.coolweather.fragmentactivities;
 
-import java.util.Locale;
-
 import org.das.coolweather.R;
-import org.das.coolweather.R.id;
-import org.das.coolweather.R.layout;
-import org.das.coolweather.R.menu;
 import org.das.coolweather.activities.SettingsActivity;
 import org.das.coolweather.utils.SectionsPagerAdapter;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import org.das.coolweather.utils.WeatherHttpClient;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -96,6 +72,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
+		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+		String units = sharedPref.getString(SettingsActivity.TEMPERATURE, "metric");
+		WeatherHttpClient.UNITS = units;
 	}
 
 	@Override
