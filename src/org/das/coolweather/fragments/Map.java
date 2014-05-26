@@ -1,5 +1,7 @@
 package org.das.coolweather.fragments;
 
+import java.util.HashMap;
+
 import org.das.coolweather.R;
 import org.das.coolweather.R.id;
 import org.das.coolweather.R.layout;
@@ -33,8 +35,10 @@ public class Map extends Fragment {
 
 	private GoogleMap theMap;
 	private JSONObject mapData;
+	private HashMap<String, LatLng> markers;
 	
 	public Map() {
+		markers = new HashMap<String, LatLng>();
 	}
 	
 	public static Map newInstance() {
@@ -55,10 +59,12 @@ public class Map extends Fragment {
 			
 			@Override
 			public void onMapClick(LatLng point) {
-				theMap.addMarker(new MarkerOptions()
+				Marker aMarker = theMap.addMarker(new MarkerOptions()
 				.position(point)
 				.draggable(true));
 				LaBD.getMiBD(getActivity()).addMarker(point.latitude, point.longitude);
+				markers.put(aMarker.getId(), aMarker.getPosition());
+				
 			}
 		});
 		
@@ -104,12 +110,15 @@ public class Map extends Fragment {
 			@Override
 			public void onMarkerDragStart(Marker marker) {
 				
+				LatLng markerPosition = markers.get(marker.getId());
+				
 				Toast.makeText(getActivity(), "Marker en la posicion " + 
-						marker.getPosition().toString() + " borrado", 
+						markerPosition.toString() + " borrado", 
 						Toast.LENGTH_LONG).show();
+				
 				LaBD.getMiBD(getActivity())
-					.removeMarker(marker.getPosition().latitude, 
-							marker.getPosition().longitude);
+					.removeMarker(markerPosition.latitude, 
+							markerPosition.longitude);
 				marker.remove();
 			}
 
@@ -132,9 +141,10 @@ public class Map extends Fragment {
 		Cursor aCursor = LaBD.getMiBD(getActivity()).getMarkers();
 		if(aCursor.moveToFirst()){
 			do {
-				theMap.addMarker(new MarkerOptions()
+				Marker aMarker = theMap.addMarker(new MarkerOptions()
 				.position(new LatLng(aCursor.getDouble(0), aCursor.getDouble(1)))
 				.draggable(true));
+				markers.put(aMarker.getId(), aMarker.getPosition());
 			} while(aCursor.moveToNext());
 		}
 	}
