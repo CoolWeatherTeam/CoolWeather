@@ -7,12 +7,15 @@ import org.json.JSONObject;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
+import com.jjoe64.graphview.GraphView.LegendAlign;
+import com.jjoe64.graphview.GraphViewSeries.GraphViewSeriesStyle;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.LineGraphView;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +28,7 @@ import android.widget.ShareActionProvider;
 
 public class DetailsActivity extends Activity {
 
-	private JSONObject data;
+	private static JSONObject data;
 	private ShareActionProvider mShareActionProvider;
 	
 	@Override
@@ -79,7 +82,6 @@ public class DetailsActivity extends Activity {
 	private String getPrediction() {
 		String result = "";
 		try {
-			JSONArray blah = data.getJSONArray("list");
 			String ciudad = data.getJSONObject("city").getString("name");
 			String pais = data.getJSONObject("city").getString("country");
 			JSONObject hoy = data.getJSONArray("list").getJSONObject(0);
@@ -122,24 +124,96 @@ public class DetailsActivity extends Activity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_details, container, false);
 			
-			// init example series data
-			GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
-			    new GraphViewData(1, 2.0d)
-			    , new GraphViewData(2, 1.5d)
-			    , new GraphViewData(3, 2.5d)
-			    , new GraphViewData(4, 1.0d)
-			});
-			 
-			GraphView graphView = new LineGraphView(
-			    getActivity().getApplicationContext() // context
-			    , "GraphViewDemo" // heading
-			);
-			graphView.addSeries(exampleSeries); // data
-			graphView.setMinimumHeight(200);
-			graphView.setMinimumWidth(200);
+			LineGraphView l1 = new LineGraphView(getActivity().getApplicationContext(), "Temperaturas semanales");
+		        
+		        //Definimos la grafica
+		       GraphView graphView =l1;
+		        float[] maximas=new float[7],minimas=new float[7];
+		        try {
+		        	JSONArray hoy = data.getJSONArray("list");
+		        	for(int i=0;i<hoy.length();i++){
+		    			
+		    			maximas[i] = Float.parseFloat(hoy.getJSONObject(i).getJSONObject("temp").getString("max"));
+		    			minimas[i] = Float.parseFloat(hoy.getJSONObject(i).getJSONObject("temp").getString("min"));
+		        	
+		        	}
+		        } catch (JSONException e) {
+		        	e.printStackTrace();
+		        }
+		        
+		        //Definimos los datos de la linea correspondiente a las temperaturas maximas
+		        GraphViewData[] gr1= new GraphViewData[] {
+		           	 new GraphViewData(0,maximas[0]),
+		           	 new GraphViewData(1,maximas[1]),
+		                new GraphViewData(2,maximas[2]),
+		                new GraphViewData(3,maximas[3]),
+		                new GraphViewData(4,maximas[4]),
+		                new GraphViewData(5,maximas[5]),
+		                new GraphViewData(6,maximas[6]),
+		           };
+		        
+
+		        //Creamos un estilo para la linea
+		        GraphViewSeriesStyle estilo= new GraphViewSeriesStyle(Color.RED,4);
+		        //Los añadimos a una serie, objeto que se añade al grafico
+		        GraphViewSeries maximos = new GraphViewSeries("Maximas", estilo, gr1);
+		        
+		        //annadimos los datos 
+		        graphView.addSeries(maximos);
+		        
+		        
+		        //Definimos los datos de la linea correspondiente a las temperaturas maximas
+		       gr1= new GraphViewData[] {
+		           	 new GraphViewData(0,minimas[0]),
+		           	 new GraphViewData(1,minimas[1]),
+		                new GraphViewData(2,minimas[2]),
+		                new GraphViewData(3,minimas[3]),
+		                new GraphViewData(4,minimas[4]),
+		                new GraphViewData(5,minimas[5]),
+		                new GraphViewData(6,minimas[6]),
+		           };
+		         estilo = new GraphViewSeriesStyle(Color.WHITE, 4);
+		        //Los añadimos a una serie, objeto que se añade al grafico
+		        GraphViewSeries minimos = new GraphViewSeries("Minimas",estilo,gr1);
+		        
+		        //annadimos los datos 
+		        graphView.addSeries(minimos); 
+		     
+		        
+		        //Estilos
+		        	//Rellenamos la superficie que ocupan las lineas
+		        ((LineGraphView) graphView).setDrawBackground(true);
+		        ((LineGraphView) graphView).setDrawDataPoints(true);
+		        
+		        	//Tamanio del texto
+		        graphView.getGraphViewStyle().setTextSize(18);
+		        	//Color de la rejilla
+		        graphView.getGraphViewStyle().setGridColor(Color.WHITE);
+		        	//Color de la guia horizontal
+		        graphView.getGraphViewStyle().setHorizontalLabelsColor(Color.CYAN);
+		        	//Color de la gui vertical
+		        graphView.getGraphViewStyle().setVerticalLabelsColor(Color.CYAN);
+		        	//Numero de divisiones verticales (Una por dato)
+		        graphView.getGraphViewStyle().setNumVerticalLabels(gr1.length);
+		        	//numero de divisiones horizontales ( una por dia de la semana)
+		        graphView.getGraphViewStyle().setNumHorizontalLabels(7);
+		        	//Mostramos la leyenda
+		        graphView.setShowLegend(true);
+		        	//Posicionamos el la leyenda en la parte inferior derecha
+		        graphView.setLegendAlign(LegendAlign.BOTTOM);
+		        	//Definimos la guia horizontal con los dias de la semana 
+		        graphView.setHorizontalLabels(new String[] {"L", "M", "X", "J", "V", "S", "D"});
+		    		//Posicionamos la camara en el centro de la grafica
+		        graphView.setViewPort(0, 6);
+		    		//Permitimos la opcion de desplazar el grafico
+		        graphView.setScrollable(true);
+		        	//Permitimos la opcion de re-escalar el grafico
+		        graphView.setScalable(true);
+		        graphView.setMinimumHeight(500);
+				graphView.setMinimumWidth(100);
+				
 			LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.graph);
 			layout.addView(graphView);
-			
 			
 		return rootView;
 		}
