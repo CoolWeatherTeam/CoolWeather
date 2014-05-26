@@ -10,10 +10,12 @@ import java.util.Random;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
+import android.util.Log;
 
 public class LaBD extends SQLiteOpenHelper{
 
@@ -79,9 +81,15 @@ public class LaBD extends SQLiteOpenHelper{
 	}
 
 	public void removeMarker(double lat, double lon) {
-		db.delete("markers", 
-				"lat=? and lon=?", 
-				new String[]{String.valueOf(lat), String.valueOf(lon)});
+		try {
+			db.execSQL("delete from markers where lat="+lat+" and lon="+lon);
+			
+		} catch (SQLException e) {
+			Log.e("Error", e.toString());
+		}
+//		db.delete("markers", 
+//				"lat=? and lon=?", 
+//				new String[]{String.valueOf(lat), String.valueOf(lon)});
 	}
 	
 	public void vaciar() {
