@@ -1,12 +1,5 @@
 package org.das.coolweather.utils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.Random;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,7 +7,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Environment;
 import android.util.Log;
 
 public class LaBD extends SQLiteOpenHelper{
@@ -65,13 +57,6 @@ public class LaBD extends SQLiteOpenHelper{
 				null); //orderby
 	}
 
-
-	/**
-	 * A�ade un nuevo mensaje a la conversacion con cierto usuario
-	 * @param hablandoCon El usuario con el que estas hablando
-	 * @param message el mensaje
-	 * @param enviadoPor 1 = enviado por el movil, 0 = enviado por tu contacto
-	 */
 	public void addMarker(double lat, double lon) {
 		
 		ContentValues values = new ContentValues();
@@ -87,9 +72,6 @@ public class LaBD extends SQLiteOpenHelper{
 		} catch (SQLException e) {
 			Log.e("Error", e.toString());
 		}
-//		db.delete("markers", 
-//				"lat=? and lon=?", 
-//				new String[]{String.valueOf(lat), String.valueOf(lon)});
 	}
 	
 	public void vaciar() {

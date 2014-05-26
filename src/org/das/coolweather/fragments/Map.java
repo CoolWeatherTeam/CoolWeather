@@ -1,6 +1,7 @@
 package org.das.coolweather.fragments;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import org.das.coolweather.R;
 import org.das.coolweather.R.id;
@@ -133,6 +134,15 @@ public class Map extends Fragment {
 		});
 		
 		return rootView;
+	}
+
+
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		theMap.clear();
+		markers = new HashMap<String, LatLng>();
 	}
 
 	@Override

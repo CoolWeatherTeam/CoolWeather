@@ -118,5 +118,15 @@
 	        android:layout_alignBottom="@+id/txtWind"
 	        android:layout_alignLeft="@+id/txtResultHum"
 	        android:text="TextView" />
+	    
+	    <LinearLayout
+	        android:id="@+id/graph"
+	        android:layout_below="@+id/txtWind"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@android:color/background_dark"
+	        android:orientation="vertical" >
+	        
+	    </LinearLayout>
 
 </RelativeLayout>

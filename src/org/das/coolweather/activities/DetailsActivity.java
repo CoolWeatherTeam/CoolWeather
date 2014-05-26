@@ -1,19 +1,18 @@
 package org.das.coolweather.activities;
 
 import org.das.coolweather.R;
-import org.das.coolweather.R.id;
-import org.das.coolweather.R.layout;
-import org.das.coolweather.R.menu;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GraphView.GraphViewData;
+import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.LineGraphView;
+
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,14 +20,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.os.Build;
+import android.widget.LinearLayout;
+import android.widget.ShareActionProvider;
 
 public class DetailsActivity extends Activity {
 
 	private JSONObject data;
+	private ShareActionProvider mShareActionProvider;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +44,7 @@ public class DetailsActivity extends Activity {
 			getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
 		}
 		
-//		JSONWeatherTask task = new JSONWeatherTask();
-//		task.execute(new String[]{getIntent().getExtras().getString("City")});
+		
 	}
 
 	@Override
@@ -55,7 +52,48 @@ public class DetailsActivity extends Activity {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.details, menu);
+		
+		// Set up ShareActionProvider's default share intent
+	    MenuItem item = menu.findItem(R.id.menu_item_share);
+	    
+	    mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+	    mShareActionProvider.setShareIntent(getDefaultIntent());
+
+
 		return true;
+	}
+	
+	/** Defines a default (dummy) share intent to initialize the action provider.
+	  * However, as soon as the actual content to be used in the intent
+	  * is known or changes, you must update the share intent by again calling
+	  * mShareActionProvider.setShareIntent()
+	  */
+	private Intent getDefaultIntent() {
+	    Intent intent = new Intent(Intent.ACTION_SEND);
+	    intent.setType("text/plain");
+	    intent.putExtra(Intent.EXTRA_TEXT, getPrediction());
+	    return intent;
+	}
+
+
+	private String getPrediction() {
+		String result = "";
+		try {
+			JSONArray blah = data.getJSONArray("list");
+			String ciudad = data.getJSONObject("city").getString("name");
+			String pais = data.getJSONObject("city").getString("country");
+			JSONObject hoy = data.getJSONArray("list").getJSONObject(0);
+			String tempMax = hoy.getJSONObject("temp").getString("max");
+			String tempMin = hoy.getJSONObject("temp").getString("min");
+			String weather = hoy.getJSONArray("weather").getJSONObject(0).getString("description");
+			result = "Hoy en " + ciudad + ", " + pais + " hay una prevision de " + weather +
+					" y una temp max de " + tempMax + " y min de " + tempMin;
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
@@ -83,6 +121,25 @@ public class DetailsActivity extends Activity {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_details, container, false);
+			
+			// init example series data
+			GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
+			    new GraphViewData(1, 2.0d)
+			    , new GraphViewData(2, 1.5d)
+			    , new GraphViewData(3, 2.5d)
+			    , new GraphViewData(4, 1.0d)
+			});
+			 
+			GraphView graphView = new LineGraphView(
+			    getActivity().getApplicationContext() // context
+			    , "GraphViewDemo" // heading
+			);
+			graphView.addSeries(exampleSeries); // data
+			graphView.setMinimumHeight(200);
+			graphView.setMinimumWidth(200);
+			LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.graph);
+			layout.addView(graphView);
+			
 			
 		return rootView;
 		}

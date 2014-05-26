@@ -36,7 +36,7 @@ public class WeatherHttpClient {
 	public static String UNITS;
 	private static final String APPID = "670d7fd5ed6be7af97f71f698ba1aad2";
 	private static final String MODE = "json";
-	private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?APPID="+APPID+"&";
+	private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?APPID="+APPID+"&lang=sp&";
 	
 
 	public static JSONObject getDataFromLocation(String optionString) {
