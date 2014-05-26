@@ -2,6 +2,7 @@ package org.das.coolweather.fragmentactivities;
 
 import org.das.coolweather.R;
 import org.das.coolweather.activities.SettingsActivity;
+import org.das.coolweather.fragments.Search;
 import org.das.coolweather.utils.SectionsPagerAdapter;
 import org.das.coolweather.utils.WeatherHttpClient;
 
@@ -13,11 +14,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 
-public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener, OnQueryTextListener {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -84,6 +88,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        searchView.setQueryHint("Search...");
+        searchView.setOnQueryTextListener(this);
 		return true;
 	}
 
@@ -117,5 +126,23 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	public void onTabReselected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
 	}
+
+	@Override
+	public boolean onQueryTextChange(String newText) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(String query) {
+		mViewPager.setCurrentItem(0);
+		Search busqueda = (Search)mViewPager.getAdapter().instantiateItem(mViewPager, mViewPager.getCurrentItem());
+		busqueda.getMinDetailsFromSearch(query);
+		
+		//Search search = (Search)getSupportFragmentManager().findFragmentById();
+		return false;
+	}
+
+
 
 }

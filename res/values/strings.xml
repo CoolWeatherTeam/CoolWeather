@@ -13,5 +13,7 @@
     <string name="humidity"><b>Humedad</b></string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_search">Search</string>
+    
+    <string name="butSearchDetails"> DETALLES</string>
 
 </resources>
