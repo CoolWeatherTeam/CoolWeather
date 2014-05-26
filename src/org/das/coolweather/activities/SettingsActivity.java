@@ -18,6 +18,7 @@ public class SettingsActivity extends Activity {
 
 	public static final String TEMPERATURE = "TEMPERATURE";
 	public static final String EMPTY_DB = "button";
+	public static final String PREDICTION_LANG = "PREDICTION_LANG";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,11 @@ public class SettingsActivity extends Activity {
 				SharedPreferences sharedPreferences, String key) {
 			if(key.equals(TEMPERATURE)) {
 				WeatherHttpClient.UNITS = sharedPreferences.getString(key, "metric");
+				return;
+			}
+			
+			if(key.equals(PREDICTION_LANG)) {
+				WeatherHttpClient.PRED_LANG = sharedPreferences.getString(key, "es");
 				return;
 			}
 		}

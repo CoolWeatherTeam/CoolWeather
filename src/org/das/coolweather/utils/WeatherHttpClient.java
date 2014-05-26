@@ -34,9 +34,10 @@ import android.util.Log;
 
 public class WeatherHttpClient {
 	public static String UNITS;
+	public static String PRED_LANG;
 	private static final String APPID = "670d7fd5ed6be7af97f71f698ba1aad2";
 	private static final String MODE = "json";
-	private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?APPID="+APPID+"&lang=sp&";
+	private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/daily?APPID="+APPID+"&";
 	
 
 	public static JSONObject getDataFromLocation(String optionString) {
@@ -70,7 +71,7 @@ public class WeatherHttpClient {
 					return null;
 				}
 				
-			}.execute(optionString+"&mode=" + MODE + "&units="+UNITS).get();
+			}.execute(optionString+"&mode=" + MODE + "&units="+UNITS +"&lang="+PRED_LANG).get();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
