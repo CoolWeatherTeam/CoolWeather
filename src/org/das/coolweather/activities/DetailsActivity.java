@@ -210,7 +210,7 @@ public class DetailsActivity extends Activity {
 		        	//Permitimos la opcion de re-escalar el grafico
 		        graphView.setScalable(true);
 		        graphView.setMinimumHeight(500);
-				graphView.setMinimumWidth(100);
+				graphView.setMinimumWidth(300);
 				
 			LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.graph);
 			layout.addView(graphView);
