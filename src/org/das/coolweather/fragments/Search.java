@@ -10,7 +10,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.view.LayoutInflater;
@@ -27,12 +29,6 @@ import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 
 public class Search extends Fragment  {
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		
-	}
 
 	private TextView txtSearchCity, txtResultTempMin, txtResultTempMax, txtSearchTerm;
 	private Button btnSearchTerm;
@@ -60,7 +56,7 @@ public class Search extends Fragment  {
 			@Override
 			public void onClick(View arg0) {
 				Intent intentDetails = new Intent(getActivity(), DetailsActivity.class);
-//				intentDetails.putExtra("City", edtSearchTerm.getText().toString());
+				intentDetails.putExtra("JSON_DATA", cityData.toString());
 				startActivity(intentDetails);
 				
 			}
@@ -73,18 +69,48 @@ public class Search extends Fragment  {
 			cityData = WeatherHttpClient.
 					getDataFromLocation(
 							"q="+ pCity);
-			JSONArray prediction = cityData.getJSONArray("list");
-			String ciudad = cityData.getJSONObject("city").getString("name"), 
-				pais = cityData.getJSONObject("city").getString("country");
-			int max = prediction.getJSONObject(0).getJSONObject("temp").getInt("max");
-			int min = prediction.getJSONObject(0).getJSONObject("temp").getInt("min");
-			
-			txtSearchTerm.setText(pCity + " " + min + " " + max);
-			txtSearchCity.setText(pCity);
-			txtResultTempMin.setText(min+"");
-			txtResultTempMax.setText(max+"");
+			fillData();
 
 		} catch(JSONException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void fillData() throws JSONException {
+		JSONArray prediction = cityData.getJSONArray("list");
+		String ciudad = cityData.getJSONObject("city").getString("name"), 
+			pais = cityData.getJSONObject("city").getString("country");
+		int max = prediction.getJSONObject(0).getJSONObject("temp").getInt("max");
+		int min = prediction.getJSONObject(0).getJSONObject("temp").getInt("min");
+		
+		txtSearchCity.setText(ciudad + ", " + pais);
+		txtSearchCity.setTextSize(45);
+		txtResultTempMin.setText(min+"º");
+		txtResultTempMax.setText(max+"º");
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		SharedPreferences sharedPref = (SharedPreferences)PreferenceManager.
+					getDefaultSharedPreferences(getActivity());
+		sharedPref.edit()
+			.putString("JSON_DATA", cityData.toString())
+			.commit();
+		
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		SharedPreferences sharedPref = (SharedPreferences)PreferenceManager.
+				getDefaultSharedPreferences(getActivity());
+		try {
+			cityData = new JSONObject(sharedPref.getString("JSON_DATA", ""));
+			fillData();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

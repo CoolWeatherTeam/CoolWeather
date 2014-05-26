@@ -15,5 +15,7 @@
     <string name="title_activity_search">Search</string>
     
     <string name="butSearchDetails"> DETALLES</string>
-
+    <string name="MinTemperature"> <b>Temperatura mínima:</b></string>
+	<string name="MaxTemperature"> <b>Temperatura máxima:</b></string>
+    
 </resources>

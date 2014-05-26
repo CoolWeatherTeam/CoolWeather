@@ -138,8 +138,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		mViewPager.setCurrentItem(0);
 		Search busqueda = (Search)mViewPager.getAdapter().instantiateItem(mViewPager, mViewPager.getCurrentItem());
 		busqueda.getMinDetailsFromSearch(query);
-		
-		//Search search = (Search)getSupportFragmentManager().findFragmentById();
+
 		return false;
 	}
 

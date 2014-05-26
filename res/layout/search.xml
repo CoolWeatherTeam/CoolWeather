@@ -28,8 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/btnSearchDetails"
             android:layout_below="@+id/txtSearchTerm"
-            android:layout_marginTop="44dp"
-            android:text="TextView" />
+            android:layout_marginTop="44dp" />
 
         <TextView
             android:id="@+id/txtSearchTempMin"
@@ -38,15 +37,14 @@
             android:layout_alignLeft="@+id/txtSearchTerm"
             android:layout_below="@+id/txtSearchCity"
             android:layout_marginTop="55dp"
-            android:text="TextView" />
+            android:text="@string/MinTemperature" />
 
         <TextView
             android:id="@+id/txtResultTempMin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/txtSearchTempMin"
-            android:layout_alignRight="@+id/btnSearchDetails"
-            android:text="TextView" />
+            android:layout_alignRight="@+id/btnSearchDetails" />
 
         <TextView
             android:id="@+id/txtSearchTempMax"
@@ -55,14 +53,13 @@
             android:layout_alignRight="@+id/txtSearchTempMin"
             android:layout_below="@+id/txtSearchTempMin"
             android:layout_marginTop="52dp"
-            android:text="TextView" />
+            android:text="@string/MaxTemperature" />
 
         <TextView
             android:id="@+id/txtResultTempMax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/txtSearchTempMax"
-            android:layout_alignRight="@+id/txtResultTempMin"
-            android:text="TextView" />
+            android:layout_alignRight="@+id/txtResultTempMin" />
 
 </RelativeLayout>
