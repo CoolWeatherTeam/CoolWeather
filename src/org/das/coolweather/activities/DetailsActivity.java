@@ -88,8 +88,10 @@ public class DetailsActivity extends Activity {
 			String tempMax = hoy.getJSONObject("temp").getString("max");
 			String tempMin = hoy.getJSONObject("temp").getString("min");
 			String weather = hoy.getJSONArray("weather").getJSONObject(0).getString("description");
-			result = "Hoy en " + ciudad + ", " + pais + " hay una prevision de " + weather +
-					" y una temp max de " + tempMax + " y min de " + tempMin;
+			result = getApplicationContext().getString(R.string.TodayIn) + " " + ciudad + ", " + pais + 
+					getApplicationContext().getString(R.string.ThereIsAPrevision)+ " " + weather +
+					getApplicationContext().getString(R.string.AndTempMax) + " " + tempMax + 
+					getApplicationContext().getString(R.string.AndTempMin) + " " + tempMin;
 			
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -124,7 +126,7 @@ public class DetailsActivity extends Activity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_details, container, false);
 			
-			LineGraphView l1 = new LineGraphView(getActivity().getApplicationContext(), "Temperaturas semanales");
+			LineGraphView l1 = new LineGraphView(getActivity().getApplicationContext(), getActivity().getString(R.string.WeeklyTemperatures));
 		        
 		        //Definimos la grafica
 		       GraphView graphView =l1;
@@ -156,7 +158,7 @@ public class DetailsActivity extends Activity {
 		        //Creamos un estilo para la linea
 		        GraphViewSeriesStyle estilo= new GraphViewSeriesStyle(Color.RED,4);
 		        //Los añadimos a una serie, objeto que se añade al grafico
-		        GraphViewSeries maximos = new GraphViewSeries("Maximas", estilo, gr1);
+		        GraphViewSeries maximos = new GraphViewSeries(getActivity().getString(R.string.Maximus), estilo, gr1);
 		        
 		        //annadimos los datos 
 		        graphView.addSeries(maximos);
@@ -174,7 +176,7 @@ public class DetailsActivity extends Activity {
 		           };
 		         estilo = new GraphViewSeriesStyle(Color.WHITE, 4);
 		        //Los añadimos a una serie, objeto que se añade al grafico
-		        GraphViewSeries minimos = new GraphViewSeries("Minimas",estilo,gr1);
+		        GraphViewSeries minimos = new GraphViewSeries(getActivity().getString(R.string.Minimus),estilo,gr1);
 		        
 		        //annadimos los datos 
 		        graphView.addSeries(minimos); 
@@ -217,7 +219,7 @@ public class DetailsActivity extends Activity {
 			
 		return rootView;
 		}
-		
+	
 	}
 	
 	

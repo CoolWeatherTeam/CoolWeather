@@ -30,7 +30,7 @@ import android.widget.TextView;
 
 public class Search extends Fragment  {
 
-	private TextView txtSearchCity, txtResultTempMin, txtResultTempMax, txtSearchTerm;
+	private TextView txtSearchCity, txtResultTempMin, txtResultTempMax;
 	private Button btnSearchTerm;
 	private JSONObject cityData;
 	
@@ -44,11 +44,10 @@ public class Search extends Fragment  {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.search, container,
 				false);
-//		edtSearchTerm= (EditText) rootView.findViewById(R.id.edtSearchTerm);
+		
 		txtSearchCity = (TextView) rootView.findViewById(R.id.txtSearchCity);
 		txtResultTempMin = (TextView) rootView.findViewById(R.id.txtResultTempMin);
 		txtResultTempMax = (TextView) rootView.findViewById(R.id.txtResultTempMax);
-		txtSearchTerm = (TextView) rootView.findViewById(R.id.txtSearchTerm);
 		btnSearchTerm = (Button) rootView.findViewById(R.id.btnSearchDetails);
 		
 		btnSearchTerm.setOnClickListener(new View.OnClickListener() {
@@ -86,8 +85,8 @@ public class Search extends Fragment  {
 		
 		txtSearchCity.setText(ciudad + ", " + pais);
 		txtSearchCity.setTextSize(45);
-		txtResultTempMin.setText(min+"º");
-		txtResultTempMax.setText(max+"º");
+		txtResultTempMin.setText(min + "º");
+		txtResultTempMax.setText(max + "º");
 	}
 
 	@Override

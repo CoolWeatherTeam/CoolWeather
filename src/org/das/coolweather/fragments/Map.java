@@ -113,8 +113,8 @@ public class Map extends Fragment {
 				
 				LatLng markerPosition = markers.get(marker.getId());
 				
-				Toast.makeText(getActivity(), "Marker en la posicion " + 
-						markerPosition.toString() + " borrado", 
+				Toast.makeText(getActivity(), getActivity().getString(R.string.MarkerInPosition)+ " " + 
+						markerPosition.toString() + " " + getActivity().getString(R.string.deleted), 
 						Toast.LENGTH_LONG).show();
 				
 				LaBD.getMiBD(getActivity())

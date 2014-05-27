@@ -44,7 +44,7 @@
 	        android:layout_alignRight="@+id/txtTemperature"
 	        android:layout_below="@+id/txtTemperature"
 	        android:layout_marginTop="41dp"
-	        android:text="TextView" />
+	        android:text="@string/MinTemperature" />
 
 	    <TextView
 	        android:id="@+id/txtResultMinTemp"
@@ -56,23 +56,13 @@
 	        android:text="TextView" />
 
 	    <TextView
-	        android:id="@+id/txtTemperature"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_below="@+id/txtCity"
-	        android:layout_marginLeft="42dp"
-	        android:layout_marginTop="66dp"
-	        android:text="TextView" />
-
-	    <TextView
 	        android:id="@+id/txtMaxTemp"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_alignLeft="@+id/txtMinTemp"
 	        android:layout_below="@+id/txtMinTemp"
 	        android:layout_marginTop="40dp"
-	        android:text="TextView" />
+	        android:text="@string/MaxTemperature" />
 
 	    <TextView
 	        android:id="@+id/txtResultMaxTemp"
@@ -90,7 +80,7 @@
 	        android:layout_alignLeft="@+id/txtMaxTemp"
 	        android:layout_below="@+id/txtMaxTemp"
 	        android:layout_marginTop="36dp"
-	        android:text="TextView" />
+	        android:text="@string/Humidity" />
 
 	    <TextView
 	        android:id="@+id/txtResultHum"
@@ -108,7 +98,7 @@
 	        android:layout_alignLeft="@+id/txtHumidity"
 	        android:layout_below="@+id/txtHumidity"
 	        android:layout_marginTop="36dp"
-	        android:text="TextView" />
+	        android:text="@string/Wind" />
 
 	    <TextView
 	        android:id="@+id/txtResultWind"
@@ -128,5 +118,14 @@
 	        android:orientation="vertical" >
 	        
 	    </LinearLayout>
+
+	    <TextView
+	        android:id="@+id/txtTemperature"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/graph"
+	        android:layout_below="@+id/txtCity"
+	        android:layout_marginTop="67dp"
+	        android:text="@string/Temperature" />
 
 </RelativeLayout>

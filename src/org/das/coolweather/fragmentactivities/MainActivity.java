@@ -91,7 +91,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
-        searchView.setQueryHint("Search...");
+        searchView.setQueryHint(getApplicationContext().getString(R.string.search) + "...");
         searchView.setOnQueryTextListener(this);
 		return true;
 	}
