@@ -6,7 +6,16 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/clouds"
     tools:context="org.das.coolweather.DetailsActivity$PlaceholderFragment" >
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="504dp" >
 
 	    <ImageView
 	        android:id="@+id/imageView1"
@@ -127,5 +136,6 @@
 	        android:layout_below="@+id/txtCity"
 	        android:layout_marginTop="67dp"
 	        android:text="@string/Temperature" />
-
+	</RelativeLayout>
+	</ScrollView>
 </RelativeLayout>

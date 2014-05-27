@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 import android.widget.SearchView.OnQueryTextListener;
@@ -30,8 +31,8 @@ import android.widget.TextView;
 
 public class Search extends Fragment  {
 
-	private TextView txtSearchCity, txtResultTempMin, txtResultTempMax;
-	private Button btnSearchTerm;
+	private TextView txtSearchCity, txtResultTempMin, txtResultTempMax, txtTempMin, txtTempMax;
+	private ImageButton btnSearchTerm;
 	private JSONObject cityData;
 	
 	public static Search newInstance() {
@@ -48,7 +49,11 @@ public class Search extends Fragment  {
 		txtSearchCity = (TextView) rootView.findViewById(R.id.txtSearchCity);
 		txtResultTempMin = (TextView) rootView.findViewById(R.id.txtResultTempMin);
 		txtResultTempMax = (TextView) rootView.findViewById(R.id.txtResultTempMax);
-		btnSearchTerm = (Button) rootView.findViewById(R.id.btnSearchDetails);
+		txtTempMin = (TextView) rootView.findViewById(R.id.txtSearchTempMin);
+		txtTempMin.setTextSize(14);
+		txtTempMax = (TextView) rootView.findViewById(R.id.txtSearchTempMax);
+		txtTempMax.setTextSize(14);
+		btnSearchTerm = (ImageButton) rootView.findViewById(R.id.btnSearchDetails);
 		
 		btnSearchTerm.setOnClickListener(new View.OnClickListener() {
 			
@@ -86,7 +91,9 @@ public class Search extends Fragment  {
 		txtSearchCity.setText(ciudad + ", " + pais);
 		txtSearchCity.setTextSize(45);
 		txtResultTempMin.setText(min + "º");
+		txtResultTempMin.setTextSize(20);
 		txtResultTempMax.setText(max + "º");
+		txtResultTempMax.setTextSize(20);
 	}
 
 	@Override
