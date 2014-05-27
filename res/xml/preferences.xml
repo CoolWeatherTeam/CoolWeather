@@ -14,6 +14,6 @@
         android:entryValues="@array/values" 
         android:summary="Seleccione el idioma en el que quiere obtener la prediccion" 
         android:key="PREDICTION_LANG" android:title="Idioma prediccion"
-        android:defaultValue="es" />
+        android:defaultValue="sp" />
         
 </PreferenceScreen>

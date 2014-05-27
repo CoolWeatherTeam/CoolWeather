@@ -78,7 +78,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		}
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		String units = sharedPref.getString(SettingsActivity.TEMPERATURE, "metric");
-		String predLang = sharedPref.getString(SettingsActivity.PREDICTION_LANG, "es");
+		String predLang = sharedPref.getString(SettingsActivity.PREDICTION_LANG, "sp");
 		WeatherHttpClient.UNITS = units;
 		WeatherHttpClient.PRED_LANG = predLang;
 	}

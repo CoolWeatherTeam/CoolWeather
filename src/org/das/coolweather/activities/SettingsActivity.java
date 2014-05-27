@@ -74,7 +74,7 @@ public class SettingsActivity extends Activity {
 			}
 			
 			if(key.equals(PREDICTION_LANG)) {
-				WeatherHttpClient.PRED_LANG = sharedPreferences.getString(key, "es");
+				WeatherHttpClient.PRED_LANG = sharedPreferences.getString(key, "sp");
 				return;
 			}
 		}
