@@ -15,9 +15,9 @@ Clone the repository
 
 2. Make sure you have downloaded Android GraphView from https://github.com/jjoe64/GraphView
 
-3. Add the GraphView*.jar to the libs folder
+3. Add the GraphView-3.1.1.jar to the libs folder
 
-4. Build and enjoy!
+4. Build and enjoy! (Note, you will need to change the Map API key, We're sorry we won't share our google account :))  
 
 Features
 -----
