@@ -73,10 +73,13 @@ public class Search extends Fragment  {
 			cityData = WeatherHttpClient.
 					getDataFromLocation(
 							"q="+ pCity);
+			if(cityData == null) {
+				throw new JSONException("");
+			}
 			fillData();
 
 		} catch(JSONException e) {
-			e.printStackTrace();
+			Toast.makeText(getActivity(), "No hay internet", Toast.LENGTH_SHORT).show();
 		}
 		
 	}
@@ -99,11 +102,13 @@ public class Search extends Fragment  {
 	@Override
 	public void onPause() {
 		super.onPause();
-		SharedPreferences sharedPref = (SharedPreferences)PreferenceManager.
-					getDefaultSharedPreferences(getActivity());
-		sharedPref.edit()
-			.putString("JSON_DATA", cityData.toString())
-			.commit();
+		if(cityData != null) {
+			SharedPreferences sharedPref = (SharedPreferences)PreferenceManager.
+						getDefaultSharedPreferences(getActivity());
+			sharedPref.edit()
+				.putString("JSON_DATA", cityData.toString())
+				.commit();
+		}
 		
 	}
 

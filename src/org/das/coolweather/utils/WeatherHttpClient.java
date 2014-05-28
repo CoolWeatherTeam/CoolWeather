@@ -60,15 +60,14 @@ public class WeatherHttpClient {
 						JSONObject data = new JSONObject(result);
 						return data;
 					} catch (UnsupportedEncodingException e) {
-						e.printStackTrace();
+						return null;
 					} catch (ClientProtocolException e) {
-						e.printStackTrace();
+						return null;
 					} catch (IOException e) {
-						e.printStackTrace();
+						return null;
 					} catch (JSONException e) {
-						e.printStackTrace();
+						return null;
 					}
-					return null;
 				}
 				
 			}.execute(optionString+"&mode=" + MODE + "&units="+UNITS +"&lang="+PRED_LANG).get();

@@ -78,16 +78,20 @@ public class Map extends Fragment {
 							getDataFromLocation(
 									"lat="+ marker.getPosition().latitude + 
 									"&lon=" + marker.getPosition().longitude);
-					JSONArray prediction = mapData.getJSONArray("list");
-					String ciudad = mapData.getJSONObject("city").getString("name"), 
-						pais = mapData.getJSONObject("city").getString("country");
-					int max = prediction.getJSONObject(0).getJSONObject("temp").getInt("max");
-					int min = prediction.getJSONObject(0).getJSONObject("temp").getInt("min");
-					
-					marker.setTitle(ciudad + ", " + pais);
-					marker.setSnippet("Max: " + max + "\n Min: " + min);
+					if(mapData != null) {						
+						JSONArray prediction = mapData.getJSONArray("list");
+						String ciudad = mapData.getJSONObject("city").getString("name"), 
+								pais = mapData.getJSONObject("city").getString("country");
+						int max = prediction.getJSONObject(0).getJSONObject("temp").getInt("max");
+						int min = prediction.getJSONObject(0).getJSONObject("temp").getInt("min");
+						
+						marker.setTitle(ciudad + ", " + pais);
+						marker.setSnippet("Max: " + max + "\n Min: " + min);
+					} else {
+						throw new JSONException("");
+					}
 				} catch(JSONException e) {
-					e.printStackTrace();
+					Toast.makeText(getActivity(), "No hay internet", Toast.LENGTH_SHORT).show();
 				}
 				return false;
 			}
