@@ -134,7 +134,7 @@ public class Map extends Fragment {
 		});
 		
 		return rootView;
-	}
+	} 
 
 
 	
