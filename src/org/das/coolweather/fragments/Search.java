@@ -50,9 +50,9 @@ public class Search extends Fragment  {
 		txtResultTempMin = (TextView) rootView.findViewById(R.id.txtResultTempMin);
 		txtResultTempMax = (TextView) rootView.findViewById(R.id.txtResultTempMax);
 		txtTempMin = (TextView) rootView.findViewById(R.id.txtSearchTempMin);
-		txtTempMin.setTextSize(14);
+		txtTempMin.setTextSize(20);
 		txtTempMax = (TextView) rootView.findViewById(R.id.txtSearchTempMax);
-		txtTempMax.setTextSize(14);
+		txtTempMax.setTextSize(20);
 		btnSearchTerm = (ImageButton) rootView.findViewById(R.id.btnSearchDetails);
 		
 		btnSearchTerm.setOnClickListener(new View.OnClickListener() {
@@ -94,9 +94,9 @@ public class Search extends Fragment  {
 		txtSearchCity.setText(ciudad + ", " + pais);
 		txtSearchCity.setTextSize(45);
 		txtResultTempMin.setText(min + "º");
-		txtResultTempMin.setTextSize(20);
+		txtResultTempMin.setTextSize(30);
 		txtResultTempMax.setText(max + "º");
-		txtResultTempMax.setTextSize(20);
+		txtResultTempMax.setTextSize(30);
 	}
 
 	@Override

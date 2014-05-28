@@ -1,5 +1,8 @@
 package org.das.coolweather.activities;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import org.das.coolweather.R;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -111,7 +114,33 @@ public class DetailsActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
+	public static String[] calcularDias(){
+		String[] dias= new String[]{"L", "M", "X", "J", "V", "S", "D"};;
+		Calendar c= new GregorianCalendar();
+		int dia=c.get(Calendar.DAY_OF_WEEK);
+	    switch (dia) {
+	            case Calendar.TUESDAY:
+	            	dias= new String[]{"M", "X", "J", "V", "S", "D","L"};
+                     break;
+	            case Calendar.WEDNESDAY:
+	            	dias= new String[]{"X", "J", "V", "S", "D","L", "M"};
+                     break;
+	            case Calendar.THURSDAY:
+	            	dias= new String[]{"J", "V", "S", "D","L", "M", "X"};
+                     break;
+	            case Calendar.FRIDAY:
+	            	dias= new String[]{"V", "S", "D","L", "M", "X", "J"};
+                     break;
+	            case Calendar.SATURDAY:
+	            	dias= new String[]{"S", "D","L", "M", "X", "J", "V",};
+                     break;
+	            case Calendar.SUNDAY:
+	            	dias= new String[]{"D","L", "M", "X", "J", "V", "S" };
+                     break;
+	    }
+		return dias;
+	}
+	
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
@@ -124,7 +153,7 @@ public class DetailsActivity extends Activity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_details, container, false);
+			View rootView = inflater.inflate(R.layout.details_week, container, false);
 			
 			LineGraphView l1 = new LineGraphView(getActivity().getApplicationContext(), getActivity().getString(R.string.WeeklyTemperatures));
 		        
@@ -204,7 +233,7 @@ public class DetailsActivity extends Activity {
 		        	//Posicionamos el la leyenda en la parte inferior derecha
 		        graphView.setLegendAlign(LegendAlign.BOTTOM);
 		        	//Definimos la guia horizontal con los dias de la semana 
-		        graphView.setHorizontalLabels(new String[] {"L", "M", "X", "J", "V", "S", "D"});
+		        graphView.setHorizontalLabels(calcularDias());
 		    		//Posicionamos la camara en el centro de la grafica
 		        graphView.setViewPort(0, 6);
 		    		//Permitimos la opcion de desplazar el grafico
