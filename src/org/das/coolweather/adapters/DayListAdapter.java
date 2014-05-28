@@ -51,6 +51,7 @@ public class DayListAdapter extends BaseAdapter {
 
         ImageView image = (ImageView)convertView.findViewById(R.id.imgDay);
         TextView tempMin = (TextView)convertView.findViewById(R.id.txtMinTemp);
+        TextView day = (TextView)convertView.findViewById(R.id.txtDay);
         TextView tempMax = (TextView)convertView.findViewById(R.id.txtMaxTemp);
         TextView wind = (TextView)convertView.findViewById(R.id.txtWindDay);
         TextView rain = (TextView)convertView.findViewById(R.id.txtRainDay);
@@ -58,7 +59,7 @@ public class DayListAdapter extends BaseAdapter {
         TextView clouds = (TextView)convertView.findViewById(R.id.txtCloudsDay);
 
         DayInfo aDay = daysInfo.get(position);
-        
+        day.setText(aDay.getDay().toString());
         tempMin.setText(aDay.getTempMin().toString() + " º");
         tempMin.setTextColor(Color.BLUE);
         tempMin.setTypeface(null,Typeface.BOLD);

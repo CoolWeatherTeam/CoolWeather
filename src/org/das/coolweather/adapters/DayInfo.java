@@ -7,10 +7,11 @@ public class DayInfo {
 		wind, 
 		clouds, 
 		rain, 
-		pressure;
+		pressure,day;
 	
-	public DayInfo(String imageSrc, String tempMin, 
+	public DayInfo(String day, String imageSrc, String tempMin, 
 			String tempMax, String wind, String clouds, String rain, String pressure) {
+		this.day=day;
 		this.imageSrc = imageSrc;
 		this.tempMin = tempMin;
 		this.tempMax = tempMax;
@@ -24,7 +25,11 @@ public class DayInfo {
 	public String getImageSrc() {
 		return imageSrc;
 	}
-
+	
+	public String getDay() {
+		return day;
+	}
+	
 	public String getTempMin() {
 		return tempMin;
 	}

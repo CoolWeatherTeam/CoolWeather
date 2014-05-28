@@ -265,6 +265,8 @@ public class DetailsActivity extends Activity {
 			
 			JSONArray days = data.getJSONArray("list");
 			ArrayList<DayInfo> listDays = new ArrayList<DayInfo>(days.length());
+			String[] daysNames= calcularDias();
+			
 			for(int i = 0; i < days.length(); i++) {
 				JSONObject day = days.getJSONObject(i);
 				
@@ -282,7 +284,7 @@ public class DetailsActivity extends Activity {
 				
 				String icon = day.getJSONArray("weather").getJSONObject(0).getString("icon");
 					
-				DayInfo aDay = new DayInfo(icon, tempMin, tempMax, speed, clouds, rain, pressure);
+				DayInfo aDay = new DayInfo(daysNames[i],icon, tempMin, tempMax, speed, clouds, rain, pressure);
 				listDays.add(aDay);				
 			}
 

@@ -12,7 +12,7 @@
         <ListView
             android:id="@+id/daysListView"
             android:layout_width="wrap_content"
-            android:layout_height="458dp" >
+            android:layout_height="355dp" >
 
 	    </ListView>
 	    
