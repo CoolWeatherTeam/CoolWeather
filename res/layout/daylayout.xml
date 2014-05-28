@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content" 
-	android:id="@+id/Dia1" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android">
 	
 	<TextView
 	    android:id="@+id/txtDay"
@@ -18,7 +15,7 @@
 	    android:src="@drawable/ic_plusone_medium_off_client" />
 	
 	<TextView
-	    android:id="@+id/txtTMinDay"
+	    android:id="@+id/txtMinTemp"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_toRightOf="@+id/imgDay"
@@ -27,10 +24,10 @@
 	    android:text="TMin1" />
 	
 	<TextView
-	    android:id="@+id/txtTMaxDay"
+	    android:id="@+id/txtMaxTemp"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/txtTMinDay"
+	    android:layout_below="@+id/txtMinTemp"
 	    android:layout_toRightOf="@+id/imgDay"
 	    android:paddingLeft="10dp"
 	    android:text="TMax1" />
@@ -39,8 +36,8 @@
 	    android:id="@+id/txtWindDay"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/txtTMinDay"
-	    android:layout_toRightOf="@+id/txtTMaxDay"
+	    android:layout_below="@+id/txtMinTemp"
+	    android:layout_toRightOf="@+id/txtMaxTemp"
 	    android:paddingLeft="10dp"
 	    android:text="Wind1" />
 		
@@ -48,7 +45,7 @@
 	    android:id="@+id/txtCloudsDay"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/txtTMinDay"
+	    android:layout_below="@+id/txtMinTemp"
 	    android:layout_toRightOf="@+id/txtWindDay"
 	    android:paddingLeft="10dp"
 	    android:text="Clouds1" />	
@@ -57,7 +54,7 @@
 	    android:id="@+id/txtRainDay"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/txtTMinDay"
+	    android:layout_below="@+id/txtMinTemp"
 	    android:layout_toRightOf="@+id/txtCloudsDay"
 	    android:paddingLeft="10dp"
 	    android:text="Rain1" />			
@@ -66,7 +63,7 @@
 	    android:id="@+id/txtPressureDay"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/txtTMinDay"
+	    android:layout_below="@+id/txtMinTemp"
 	    android:layout_toRightOf="@+id/txtRainDay"
 	    android:paddingLeft="10dp"
 	    android:text="Pressure1" />

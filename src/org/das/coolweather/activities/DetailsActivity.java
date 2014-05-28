@@ -1,9 +1,12 @@
 package org.das.coolweather.activities;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.das.coolweather.R;
+import org.das.coolweather.adapters.DayInfo;
+import org.das.coolweather.adapters.DayListAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,7 +30,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ShareActionProvider;
+import android.widget.TableRow;
 
 public class DetailsActivity extends Activity {
 
@@ -155,162 +160,128 @@ public class DetailsActivity extends Activity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.details_week, container, false);
 			
-			LineGraphView l1 = new LineGraphView(getActivity().getApplicationContext(), getActivity().getString(R.string.WeeklyTemperatures));
-		        
-		        //Definimos la grafica
-		       GraphView graphView =l1;
-		        float[] maximas=new float[7],minimas=new float[7];
-		        try {
-		        	JSONArray hoy = data.getJSONArray("list");
-		        	for(int i=0;i<hoy.length();i++){
-		    			
-		    			maximas[i] = Float.parseFloat(hoy.getJSONObject(i).getJSONObject("temp").getString("max"));
-		    			minimas[i] = Float.parseFloat(hoy.getJSONObject(i).getJSONObject("temp").getString("min"));
-		        	
-		        	}
-		        } catch (JSONException e) {
-		        	e.printStackTrace();
-		        }
-		        
-		        //Definimos los datos de la linea correspondiente a las temperaturas maximas
-		        GraphViewData[] gr1= new GraphViewData[] {
-		           	 new GraphViewData(0,maximas[0]),
-		           	 new GraphViewData(1,maximas[1]),
-		                new GraphViewData(2,maximas[2]),
-		                new GraphViewData(3,maximas[3]),
-		                new GraphViewData(4,maximas[4]),
-		                new GraphViewData(5,maximas[5]),
-		                new GraphViewData(6,maximas[6]),
-		           };
-		        
-
-		        //Creamos un estilo para la linea
-		        GraphViewSeriesStyle estilo= new GraphViewSeriesStyle(Color.RED,4);
-		        //Los añadimos a una serie, objeto que se añade al grafico
-		        GraphViewSeries maximos = new GraphViewSeries(getActivity().getString(R.string.Maximus), estilo, gr1);
-		        
-		        //annadimos los datos 
-		        graphView.addSeries(maximos);
-		        
-		        
-		        //Definimos los datos de la linea correspondiente a las temperaturas maximas
-		       gr1= new GraphViewData[] {
-		           	 new GraphViewData(0,minimas[0]),
-		           	 new GraphViewData(1,minimas[1]),
-		                new GraphViewData(2,minimas[2]),
-		                new GraphViewData(3,minimas[3]),
-		                new GraphViewData(4,minimas[4]),
-		                new GraphViewData(5,minimas[5]),
-		                new GraphViewData(6,minimas[6]),
-		           };
-		         estilo = new GraphViewSeriesStyle(Color.WHITE, 4);
-		        //Los añadimos a una serie, objeto que se añade al grafico
-		        GraphViewSeries minimos = new GraphViewSeries(getActivity().getString(R.string.Minimus),estilo,gr1);
-		        
-		        //annadimos los datos 
-		        graphView.addSeries(minimos); 
-		     
-		        
-		        //Estilos
-		        	//Rellenamos la superficie que ocupan las lineas
-		        ((LineGraphView) graphView).setDrawBackground(true);
-		        ((LineGraphView) graphView).setDrawDataPoints(true);
-		        
-		        	//Tamanio del texto
-		        graphView.getGraphViewStyle().setTextSize(18);
-		        	//Color de la rejilla
-		        graphView.getGraphViewStyle().setGridColor(Color.WHITE);
-		        	//Color de la guia horizontal
-		        graphView.getGraphViewStyle().setHorizontalLabelsColor(Color.CYAN);
-		        	//Color de la gui vertical
-		        graphView.getGraphViewStyle().setVerticalLabelsColor(Color.CYAN);
-		        	//Numero de divisiones verticales (Una por dato)
-		        graphView.getGraphViewStyle().setNumVerticalLabels(gr1.length);
-		        	//numero de divisiones horizontales ( una por dia de la semana)
-		        graphView.getGraphViewStyle().setNumHorizontalLabels(7);
-		        	//Mostramos la leyenda
-		        graphView.setShowLegend(true);
-		        	//Posicionamos el la leyenda en la parte inferior derecha
-		        graphView.setLegendAlign(LegendAlign.BOTTOM);
-		        	//Definimos la guia horizontal con los dias de la semana 
-		        graphView.setHorizontalLabels(calcularDias());
-		    		//Posicionamos la camara en el centro de la grafica
-		        graphView.setViewPort(0, 6);
-		    		//Permitimos la opcion de desplazar el grafico
-		        graphView.setScrollable(true);
-		        	//Permitimos la opcion de re-escalar el grafico
-		        graphView.setScalable(true);
-		        graphView.setMinimumHeight(500);
-				graphView.setMinimumWidth(300);
-				
-			LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.graph);
-			layout.addView(graphView);
+			try {
+				setupListView(rootView);
+				setupChart(rootView);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			
 		return rootView;
 		}
+
+		private void setupChart(View rootView) throws JSONException {
+			LineGraphView l1 = new LineGraphView(getActivity().getApplicationContext(), getActivity().getString(R.string.WeeklyTemperatures));
+		        
+	        //Definimos la grafica
+			GraphView graphView =l1;
+	        float[] maximas=new float[7],minimas=new float[7];
+        	JSONArray hoy = data.getJSONArray("list");
+        	for(int i=0;i<hoy.length();i++){
+    			
+    			maximas[i] = Float.parseFloat(hoy.getJSONObject(i).getJSONObject("temp").getString("max"));
+    			minimas[i] = Float.parseFloat(hoy.getJSONObject(i).getJSONObject("temp").getString("min"));
+        	
+        	}
+	        
+	        
+	        //Definimos los datos de la linea correspondiente a las temperaturas maximas
+	        GraphViewData[] gr1= new GraphViewData[] {
+	           	 new GraphViewData(0,maximas[0]),
+	           	 new GraphViewData(1,maximas[1]),
+	           	 new GraphViewData(2,maximas[2]),
+	           	 new GraphViewData(3,maximas[3]),
+	           	 new GraphViewData(4,maximas[4]),
+	           	 new GraphViewData(5,maximas[5]),
+	           	 new GraphViewData(6,maximas[6]),
+	        };
+	        
+
+	        //Creamos un estilo para la linea
+	        GraphViewSeriesStyle estilo= new GraphViewSeriesStyle(Color.RED,4);
+	        //Los añadimos a una serie, objeto que se añade al grafico
+	        GraphViewSeries maximos = new GraphViewSeries(getActivity().getString(R.string.Maximus), estilo, gr1);
+	        
+	        //annadimos los datos 
+	        graphView.addSeries(maximos);
+		        
+		        
+		        //Definimos los datos de la linea correspondiente a las temperaturas maximas
+	        gr1= new GraphViewData[] {
+	           	 new GraphViewData(0,minimas[0]),
+	           	 new GraphViewData(1,minimas[1]),
+	           	 new GraphViewData(2,minimas[2]),
+	           	 new GraphViewData(3,minimas[3]),
+	           	 new GraphViewData(4,minimas[4]),
+	           	 new GraphViewData(5,minimas[5]),
+	           	 new GraphViewData(6,minimas[6]),
+	        };
+	        estilo = new GraphViewSeriesStyle(Color.WHITE, 4);
+	        //Los añadimos a una serie, objeto que se añade al grafico
+	        GraphViewSeries minimos = new GraphViewSeries(getActivity().getString(R.string.Minimus),estilo,gr1);
+	        
+	        //annadimos los datos 
+	        graphView.addSeries(minimos); 
+	     
+	        
+	        //Estilos
+        	//Rellenamos la superficie que ocupan las lineas
+	        ((LineGraphView) graphView).setDrawBackground(true);
+	        ((LineGraphView) graphView).setDrawDataPoints(true);
+	        
+	        	//Tamanio del texto
+	        graphView.getGraphViewStyle().setTextSize(18);
+	        	//Color de la rejilla
+	        graphView.getGraphViewStyle().setGridColor(Color.WHITE);
+	        	//Color de la guia horizontal
+	        graphView.getGraphViewStyle().setHorizontalLabelsColor(Color.CYAN);
+	        	//Color de la gui vertical
+	        graphView.getGraphViewStyle().setVerticalLabelsColor(Color.CYAN);
+	        	//Numero de divisiones verticales (Una por dato)
+	        graphView.getGraphViewStyle().setNumVerticalLabels(gr1.length);
+	        	//numero de divisiones horizontales ( una por dia de la semana)
+	        graphView.getGraphViewStyle().setNumHorizontalLabels(7);
+	        	//Mostramos la leyenda
+	        graphView.setShowLegend(true);
+	        	//Posicionamos el la leyenda en la parte inferior derecha
+	        graphView.setLegendAlign(LegendAlign.BOTTOM);
+	        	//Definimos la guia horizontal con los dias de la semana 
+	        graphView.setHorizontalLabels(calcularDias());
+	    		//Posicionamos la camara en el centro de la grafica
+	        graphView.setViewPort(0, 6);
+	    		//Permitimos la opcion de desplazar el grafico
+	        graphView.setScrollable(true);
+	        	//Permitimos la opcion de re-escalar el grafico
+	        graphView.setScalable(true);
+	        graphView.setMinimumHeight(500);
+			graphView.setMinimumWidth(300);
+				
+			LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.graph);
+			layout.addView(graphView);
+		}
+
+		private void setupListView(View rootView) throws JSONException {
+			ListView daysListView = (ListView)rootView.findViewById(R.id.daysListView);
+			
+			JSONArray days = data.getJSONArray("list");
+			ArrayList<DayInfo> listDays = new ArrayList<DayInfo>(days.length());
+			for(int i = 0; i < days.length(); i++) {
+				JSONObject day = days.getJSONObject(i);
+				String clouds = day.getString("clouds"), 
+					pressure = day.getString("pressure"), 
+					speed = day.getString("speed"), 
+					tempMax = day.getJSONObject("temp").getString("max"), 
+					tempMin = day.getJSONObject("temp").getString("min"),
+					//rain = day.getString("rain"),
+					icon = day.getJSONArray("weather").getJSONObject(0).getString("icon");
+					
+				DayInfo aDay = new DayInfo(icon, tempMin, tempMax, speed, clouds, "0", pressure);
+				listDays.add(aDay);				
+			}
+
+			DayListAdapter listAdapter = new DayListAdapter(getActivity(), listDays);
+			daysListView.setAdapter(listAdapter);
+		}
 	
 	}
-	
-	
-//	private class JSONWeatherTask extends AsyncTask<String, Void, Weather> {
-//		
-//
-//		private TextView txtCity, txtResultHum, txtResultTemp;
-//		private ImageView imgIcon;
-//		
-//		@Override
-//		protected Weather doInBackground(String... params) {
-//			Weather weather = new Weather();
-//			String data = WeatherHttpClient.getWeatherData(params[0]);
-//			
-//			try {
-//				weather = JSONWeatherParser.getWeather(data);
-//				
-//				// Let's retrieve the icon
-//				weather.iconData = WeatherHttpClient.getImage(weather.currentCondition.getIcon());
-//				
-//			} catch (JSONException e) {				
-//				e.printStackTrace();
-//			}
-//			return weather;
-//			
-//		}
-		
-		
-		
-		
-//		@Override
-//		protected void onPostExecute(Weather weather) {			
-//			super.onPostExecute(weather);
-//			
-//			txtCity = (TextView) findViewById(R.id.txtCity);
-//			txtResultHum = (TextView) findViewById(R.id.txtResultHum);
-//			txtResultTemp = (TextView) findViewById(R.id.txtResultTemp);
-//			imgIcon = (ImageView) findViewById(R.id.imgIcon);
-//			
-//			
-//			if (weather.iconData != null && weather.iconData.length > 0) {
-//				Bitmap img = BitmapFactory.decodeByteArray(weather.iconData, 0, weather.iconData.length); 
-//				imgIcon.setImageBitmap(img);
-//			}
-//			
-//			txtCity.setText(weather.location.getCity() + "," + weather.location.getCountry());
-//			txtCity.setTextSize(0, 64);
-//			
-//			txtResultHum.setText(weather.currentCondition.getHumidity() + "%");
-//			txtResultTemp.setText(Math.round((weather.temperature.getTemp() - 273.15)) + " C�");
-
-			
-
-
-			
-			
-//		condDescr.setText(weather.currentCondition.getCondition() + "(" + weather.currentCondition.getDescr() + ")");
-//		hum.setText("" + weather.currentCondition.getHumidity() + "%");
-//		press.setText("" + weather.currentCondition.getPressure() + " hPa");
-//		windSpeed.setText("" + weather.wind.getSpeed() + " mps");
-//		windDeg.setText("" + weather.wind.getDeg() + "�");
-			
-//		}
-//	}	
 }
