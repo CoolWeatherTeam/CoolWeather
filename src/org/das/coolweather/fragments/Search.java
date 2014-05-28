@@ -60,6 +60,10 @@ public class Search extends Fragment  {
 			@Override
 			public void onClick(View arg0) {
 				Intent intentDetails = new Intent(getActivity(), DetailsActivity.class);
+				if(cityData == null){
+					Toast.makeText(getActivity(), "Busca una ciudad", Toast.LENGTH_SHORT).show();
+					return;
+				}
 				intentDetails.putExtra("JSON_DATA", cityData.toString());
 				startActivity(intentDetails);
 				

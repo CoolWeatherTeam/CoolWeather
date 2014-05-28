@@ -32,7 +32,7 @@
 	            android:layout_below="@+id/txtSearchTerm"
 	            android:layout_centerHorizontal="true"
 	            android:layout_marginTop="44dp"
-	            android:text="sadas" />
+	            android:text="" />
 
 	        <TextView
 	            android:id="@+id/txtSearchTempMin"

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.das.coolweather.R;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,13 +59,19 @@ public class DayListAdapter extends BaseAdapter {
 
         DayInfo aDay = daysInfo.get(position);
         
-        tempMin.setText(aDay.getTempMin().toString());
-        tempMax.setText(aDay.getTempMax().toString());
-        wind.setText(aDay.getWind());
-        rain.setText(aDay.getRain().toString());
-        pressure.setText(aDay.getPressure().toString());
-        clouds.setText(aDay.getClouds().toString());
-        
+        tempMin.setText(aDay.getTempMin().toString() + " º");
+        tempMin.setTextColor(Color.BLUE);
+        tempMin.setTypeface(null,Typeface.BOLD);
+        tempMax.setText(aDay.getTempMax().toString() + " º");
+        tempMax.setTextColor(Color.RED);
+        tempMax.setTypeface(null,Typeface.BOLD);
+        wind.setText(aDay.getWind() + " m/s");
+        rain.setText(aDay.getRain().toString() + " mm");
+        pressure.setText(aDay.getPressure().toString() + " hPa");
+        clouds.setText(aDay.getClouds().toString() + " %");
+        image.setImageDrawable(context.getResources().getDrawable(context.getResources().getIdentifier("drawable/a" + aDay.getImageSrc(), "drawable", context.getPackageName())));
+//        image.setBackgroundDrawable(R.drawable.d);
+        //image.setImageResource(R.drawable.d);
         return convertView;
 	}
 
