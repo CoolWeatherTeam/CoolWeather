@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content" 
+	android:id="@+id/Dia1" >
+	
+	<TextView
+	    android:id="@+id/txtDay"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Day1" />
+	
+	<ImageView
+	    android:id="@+id/imgDay"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txtDay"
+	    android:src="@drawable/ic_plusone_medium_off_client" />
+	
+	<TextView
+	    android:id="@+id/txtTMinDay"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_toRightOf="@+id/imgDay"
+	    android:layout_below="@+id/txtDay"
+		android:paddingLeft="10dp"
+	    android:text="TMin1" />
+	
+	<TextView
+	    android:id="@+id/txtTMaxDay"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txtTMinDay"
+	    android:layout_toRightOf="@+id/imgDay"
+	    android:paddingLeft="10dp"
+	    android:text="TMax1" />
+	
+	<TextView
+	    android:id="@+id/txtWindDay"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txtTMinDay"
+	    android:layout_toRightOf="@+id/txtTMaxDay"
+	    android:paddingLeft="10dp"
+	    android:text="Wind1" />
+		
+	<TextView
+	    android:id="@+id/txtCloudsDay"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txtTMinDay"
+	    android:layout_toRightOf="@+id/txtWindDay"
+	    android:paddingLeft="10dp"
+	    android:text="Clouds1" />	
+	    
+	<TextView
+	    android:id="@+id/txtRainDay"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txtTMinDay"
+	    android:layout_toRightOf="@+id/txtCloudsDay"
+	    android:paddingLeft="10dp"
+	    android:text="Rain1" />			
+	    
+	<TextView
+	    android:id="@+id/txtPressureDay"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/txtTMinDay"
+	    android:layout_toRightOf="@+id/txtRainDay"
+	    android:paddingLeft="10dp"
+	    android:text="Pressure1" />
+</RelativeLayout>
