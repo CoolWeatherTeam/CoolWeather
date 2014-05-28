@@ -6,13 +6,11 @@ import org.das.coolweather.utils.LaBD;
 import org.das.coolweather.utils.WeatherHttpClient;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.util.Log;
 
 public class SettingsActivity extends Activity {
 

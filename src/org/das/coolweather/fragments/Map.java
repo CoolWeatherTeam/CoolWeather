@@ -1,12 +1,8 @@
 package org.das.coolweather.fragments;
 
 import java.util.HashMap;
-import java.util.Set;
-
 import org.das.coolweather.R;
-import org.das.coolweather.R.id;
-import org.das.coolweather.R.layout;
-import org.das.coolweather.activities.DetailsActivity;
+import org.das.coolweather.activities.DetailsActivityHost;
 import org.das.coolweather.utils.LaBD;
 import org.das.coolweather.utils.WeatherHttpClient;
 import org.json.JSONArray;
@@ -102,7 +98,7 @@ public class Map extends Fragment {
 			@Override
 			public void onInfoWindowClick(Marker marker) {
 				Intent i = new Intent(getActivity().getApplicationContext(), 
-						DetailsActivity.class);
+						DetailsActivityHost.class);
 				i.putExtra("JSON_DATA", mapData.toString());
 				startActivity(i);
 				

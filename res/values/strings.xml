@@ -11,26 +11,26 @@
     <string name="butSearchTerm"> BUSCAR</string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_search">Search</string>
-    
     <string name="butSearchDetails"> DETALLES</string>
-    <string name="MinTemperature"> <b>Temperatura mínima:</b></string>
-	<string name="MaxTemperature"> <b>Temperatura máxima:</b></string>
-	<string name="search">Buscar</string>
-	
-	<string name="TodayIn"> Hoy en </string>
-	<string name="ThereIsAPrevision"> hay una prevision de </string>
-	<string name="AndTempMax">y una temp max de </string>
-	<string name="AndTempMin">y min de </string>
-	<string name="WeeklyTemperatures">Temperaturas semanales</string>
-	<string name="Minimus"> Mínimas</string>
-	<string name="Maximus"> Máximas</string>
-	
-	<string name="Temperature"><b>Temperatura:</b></string>
-	<string name="Humidity"> <b>Humedad</b></string>
-	<string name="Wind"><b>Viento</b></string>
-	
-	<string name="MarkerInPosition">Marker en la posicion</string>
-	<string name="deleted"> borrado</string>
-	
-    
+    <string name="MinTemperature"><b>Temperatura mínima:</b></string>
+    <string name="MaxTemperature"><b>Temperatura máxima:</b></string>
+    <string name="search">Buscar</string>
+    <string name="TodayIn"> Hoy en </string>
+    <string name="ThereIsAPrevision"> hay una prevision de </string>
+    <string name="AndTempMax">y una temp max de </string>
+    <string name="AndTempMin">y min de </string>
+    <string name="WeeklyTemperatures">Temperaturas semanales</string>
+    <string name="Minimus"> Mínimas</string>
+    <string name="Maximus"> Máximas</string>
+    <string name="Temperature"><b>Temperatura:</b></string>
+    <string name="Humidity"><b>Humedad</b></string>
+    <string name="Wind"><b>Viento</b></string>
+    <string name="MarkerInPosition">Marker en la posicion</string>
+    <string name="deleted"> borrado</string>
+    <string name="title_activity_details_activity_host">Detalles</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="title_activity_graph">Graph</string>
+
 </resources>

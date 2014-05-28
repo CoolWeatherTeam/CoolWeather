@@ -1,9 +1,7 @@
 package org.das.coolweather.fragments;
 
 import org.das.coolweather.R;
-import org.das.coolweather.R.id;
-import org.das.coolweather.R.layout;
-import org.das.coolweather.activities.DetailsActivity;
+import org.das.coolweather.activities.DetailsActivityHost;
 import org.das.coolweather.utils.WeatherHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,19 +12,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.SearchView;
 import android.widget.Toast;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 
 public class Search extends Fragment  {
@@ -59,7 +49,7 @@ public class Search extends Fragment  {
 			
 			@Override
 			public void onClick(View arg0) {
-				Intent intentDetails = new Intent(getActivity(), DetailsActivity.class);
+				Intent intentDetails = new Intent(getActivity(), DetailsActivityHost.class);
 				if(cityData == null){
 					Toast.makeText(getActivity(), "Busca una ciudad", Toast.LENGTH_SHORT).show();
 					return;
