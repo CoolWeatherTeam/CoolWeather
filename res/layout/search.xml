@@ -47,15 +47,19 @@
 	            android:id="@+id/txtResultTempMin"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_alignBottom="@+id/txtSearchTempMin"
+	            android:layout_toRightOf="@+id/txtSearchTempMin"
+	            android:layout_below="@+id/txtSearchCity"
+	            android:paddingLeft="30dp"
+	            android:layout_marginTop="55dp"
 	            android:layout_centerHorizontal="true" />
 
 	        <TextView
 	            android:id="@+id/txtSearchTempMax"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_alignRight="@+id/txtSearchTempMin"
+	            android:layout_toRightOf="@+id/txtSearchTempMax"
 	            android:layout_below="@+id/txtSearchTempMin"
+	            android:paddingLeft="15dp"
 	            android:layout_marginTop="52dp"
 	            android:text="@string/MaxTemperature" />
 
@@ -64,6 +68,7 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_alignBottom="@+id/txtSearchTempMax"
+	           	android:paddingLeft="30dp"
 	            android:layout_alignRight="@+id/txtResultTempMin" />
 
 	        <ImageButton

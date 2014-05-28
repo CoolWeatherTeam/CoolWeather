@@ -124,7 +124,7 @@ public class DetailsActivity extends Activity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_details, container, false);
+			View rootView = inflater.inflate(R.layout.details_week, container, false);
 			
 			LineGraphView l1 = new LineGraphView(getActivity().getApplicationContext(), getActivity().getString(R.string.WeeklyTemperatures));
 		        
