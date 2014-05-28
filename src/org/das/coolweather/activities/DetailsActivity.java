@@ -267,15 +267,22 @@ public class DetailsActivity extends Activity {
 			ArrayList<DayInfo> listDays = new ArrayList<DayInfo>(days.length());
 			for(int i = 0; i < days.length(); i++) {
 				JSONObject day = days.getJSONObject(i);
+				
 				String clouds = day.getString("clouds"), 
 					pressure = day.getString("pressure"), 
 					speed = day.getString("speed"), 
 					tempMax = day.getJSONObject("temp").getString("max"), 
-					tempMin = day.getJSONObject("temp").getString("min"),
-					//rain = day.getString("rain"),
-					icon = day.getJSONArray("weather").getJSONObject(0).getString("icon");
+					tempMin = day.getJSONObject("temp").getString("min");
+				String rain = null;
+				if(day.names().toString().contains("rain")) {	
+					rain = day.getString("rain");
+				} else {
+					rain = "0";
+				}
+				
+				String icon = day.getJSONArray("weather").getJSONObject(0).getString("icon");
 					
-				DayInfo aDay = new DayInfo(icon, tempMin, tempMax, speed, clouds, "0", pressure);
+				DayInfo aDay = new DayInfo(icon, tempMin, tempMax, speed, clouds, rain, pressure);
 				listDays.add(aDay);				
 			}
 
