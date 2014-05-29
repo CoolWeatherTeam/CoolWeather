@@ -1,6 +1,12 @@
 package org.das.coolweather.fragments;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 import org.das.coolweather.R;
 import org.das.coolweather.adapters.DayInfo;
 import org.das.coolweather.adapters.DayListAdapter;
@@ -64,14 +70,25 @@ public class Details extends Fragment {
 				rain = "0";
 			}
 			
+			String fecha = getDate(i);
+			
 			String icon = day.getJSONArray("weather").getJSONObject(0).getString("icon");
-				
-			DayInfo aDay = new DayInfo(icon, tempMin, tempMax, speed, clouds, rain, pressure);
+			DayInfo aDay = new DayInfo(fecha, icon, tempMin, tempMax, speed, clouds, rain, pressure);
 			listDays.add(aDay);				
 		}
 
 		DayListAdapter listAdapter = new DayListAdapter(getActivity(), listDays);
 		daysListView.setAdapter(listAdapter);
+	}
+
+	private String getDate(int i) {
+		Calendar aCalendar = Calendar.getInstance();
+		aCalendar.add(Calendar.DAY_OF_MONTH, i);
+		Date aDate = aCalendar.getTime();
+		SimpleDateFormat formato = 
+			    new SimpleDateFormat("d/M/yyyy", new Locale("es", "ES"));
+		String fecha = formato.format(aDate);
+		return fecha;
 	}
 	
 }
