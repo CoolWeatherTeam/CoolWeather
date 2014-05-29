@@ -32,7 +32,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ShareActionProvider;
-import android.widget.TableRow;
 
 public class DetailsActivity extends Activity {
 
@@ -119,7 +118,7 @@ public class DetailsActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	public static String[] calcularDias(){
+	private static String[] calcularDias(){
 		String[] dias= new String[]{"L", "M", "X", "J", "V", "S", "D"};;
 		Calendar c= new GregorianCalendar();
 		int dia=c.get(Calendar.DAY_OF_WEEK);
@@ -265,7 +264,7 @@ public class DetailsActivity extends Activity {
 			
 			JSONArray days = data.getJSONArray("list");
 			ArrayList<DayInfo> listDays = new ArrayList<DayInfo>(days.length());
-			String[] daysNames= calcularDias();
+			String[] daysNames= daysWithNumbers();
 			
 			for(int i = 0; i < days.length(); i++) {
 				JSONObject day = days.getJSONObject(i);
@@ -291,6 +290,21 @@ public class DetailsActivity extends Activity {
 			DayListAdapter listAdapter = new DayListAdapter(getActivity(), listDays);
 			daysListView.setAdapter(listAdapter);
 		}
-	
+		private String[] daysWithNumbers(){
+			String[] dayNum= new String[7];
+			Calendar actual= new GregorianCalendar();
+			Calendar cal = Calendar.getInstance();
+			int diaActual=actual.get(Calendar.DAY_OF_YEAR);
+		    cal.set(Calendar.YEAR, actual.get(Calendar.YEAR));
+		    
+		    for(int i=0;i<7 ;i++){
+		    	cal.set(Calendar.DAY_OF_YEAR,diaActual);
+		    	dayNum[i]=""+cal.get(Calendar.DAY_OF_MONTH);
+		    	diaActual=diaActual+1;
+		    }
+			
+			return dayNum;
+			
+		}
 	}
 }
