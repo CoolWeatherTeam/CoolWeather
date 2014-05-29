@@ -1,5 +1,6 @@
 package org.das.coolweather.activities;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -252,6 +253,8 @@ public class DetailsActivity extends Activity {
 	        graphView.setScrollable(true);
 	        	//Permitimos la opcion de re-escalar el grafico
 	        graphView.setScalable(true);
+	        
+	        graphView.setHorizontalFadingEdgeEnabled(true);
 	        graphView.setMinimumHeight(500);
 			graphView.setMinimumWidth(300);
 				
@@ -292,6 +295,7 @@ public class DetailsActivity extends Activity {
 		}
 		private String[] daysWithNumbers(){
 			String[] dayNum= new String[7];
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
 			Calendar actual= new GregorianCalendar();
 			Calendar cal = Calendar.getInstance();
 			int diaActual=actual.get(Calendar.DAY_OF_YEAR);
@@ -299,7 +303,7 @@ public class DetailsActivity extends Activity {
 		    
 		    for(int i=0;i<7 ;i++){
 		    	cal.set(Calendar.DAY_OF_YEAR,diaActual);
-		    	dayNum[i]=""+cal.get(Calendar.DAY_OF_MONTH);
+		    	dayNum[i]=""+ sdf.format(cal.getTime());
 		    	diaActual=diaActual+1;
 		    }
 			
