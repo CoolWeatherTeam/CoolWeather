@@ -86,7 +86,7 @@ public class Details extends Fragment {
 		aCalendar.add(Calendar.DAY_OF_MONTH, i);
 		Date aDate = aCalendar.getTime();
 		SimpleDateFormat formato = 
-			    new SimpleDateFormat("d/M/yyyy", new Locale("es", "ES"));
+			    new SimpleDateFormat("d/M/yyyy", Locale.getDefault());
 		String fecha = formato.format(aDate);
 		return fecha;
 	}
