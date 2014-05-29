@@ -1,32 +1,26 @@
-package org.das.coolweather.fragmentactivities;
-
-import java.util.Locale;
+package org.das.coolweather.activities;
 
 import org.das.coolweather.R;
-import org.das.coolweather.activities.SettingsActivity;
-import org.das.coolweather.fragments.Map;
-import org.das.coolweather.fragments.Search;
-import org.das.coolweather.utils.WeatherHttpClient;
+import org.das.coolweather.fragments.Details;
+import org.das.coolweather.fragments.Graph;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.ActionBar;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
+import android.widget.ShareActionProvider;
 
-public class MainActivity extends FragmentActivity implements ActionBar.TabListener, OnQueryTextListener {
+public class DetailsActivityHost extends Activity implements
+		ActionBar.TabListener {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -36,17 +30,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 	 * {@link android.support.v13.app.FragmentStatePagerAdapter}.
 	 */
 	SectionsPagerAdapter mSectionsPagerAdapter;
+	private ShareActionProvider mShareActionProvider;
+	private static JSONObject data;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_details_host);
 
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -54,7 +49,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), getApplicationContext());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -81,36 +76,66 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
-		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-		String units = sharedPref.getString(SettingsActivity.TEMPERATURE, "metric");
-		String predLang = sharedPref.getString(SettingsActivity.PREDICTION_LANG, "sp");
-		WeatherHttpClient.UNITS = units;
-		WeatherHttpClient.PRED_LANG = predLang;
+		
+		try {
+			data = new JSONObject(getIntent().getStringExtra("JSON_DATA"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+		getMenuInflater().inflate(R.menu.details_activity_host, menu);
+		
+		// Set up ShareActionProvider's default share intent
+	    MenuItem item = menu.findItem(R.id.menu_item_share);
+	    
+	    mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+	    mShareActionProvider.setShareIntent(getDefaultIntent());
 
-        searchView.setQueryHint(getApplicationContext().getString(R.string.search) + "...");
-        searchView.setOnQueryTextListener(this);
+
 		return true;
+	}
+	
+	/** Defines a default (dummy) share intent to initialize the action provider.
+	  * However, as soon as the actual content to be used in the intent
+	  * is known or changes, you must update the share intent by again calling
+	  * mShareActionProvider.setShareIntent()
+	  */
+	private Intent getDefaultIntent() {
+	    Intent intent = new Intent(Intent.ACTION_SEND);
+	    intent.setType("text/plain");
+	    intent.putExtra(Intent.EXTRA_TEXT, getPrediction());
+	    return intent;
+	}
+
+
+	private String getPrediction() {
+		String result = "";
+		try {
+			String ciudad = data.getJSONObject("city").getString("name");
+			String pais = data.getJSONObject("city").getString("country");
+			JSONObject hoy = data.getJSONArray("list").getJSONObject(0);
+			String tempMax = hoy.getJSONObject("temp").getString("max");
+			String tempMin = hoy.getJSONObject("temp").getString("min");
+			String weather = hoy.getJSONArray("weather").getJSONObject(0).getString("description");
+			result = getApplicationContext().getString(R.string.TodayIn) + " " + ciudad + ", " + pais + 
+					getApplicationContext().getString(R.string.ThereIsAPrevision)+ " " + weather +
+					getApplicationContext().getString(R.string.AndTempMax) + " " + tempMax + 
+					getApplicationContext().getString(R.string.AndTempMin) + " " + tempMin;
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			Intent i = new Intent(this, SettingsActivity.class);
-			startActivity(i);
-		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -132,46 +157,27 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			FragmentTransaction fragmentTransaction) {
 	}
 
-	@Override
-	public boolean onQueryTextChange(String newText) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean onQueryTextSubmit(String query) {
-		mViewPager.setCurrentItem(0);
-		Search busqueda = (Search)mViewPager.getAdapter().instantiateItem(mViewPager, mViewPager.getCurrentItem());
-		busqueda.getMinDetailsFromSearch(query);
-
-		return false;
-	}
-
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
 	 */
-	private class SectionsPagerAdapter extends FragmentPagerAdapter {
+	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-		private Context context;
-		
-		public SectionsPagerAdapter(FragmentManager fm, Context context) {
+		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
-			this.context = context;
 		}
 
 		@Override
 		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a PlaceholderFragment (defined as a static inner class
-			// below).
+			
 			Fragment toReturn = null;
+			
 			switch (position+1) {
 			case 1:
-				toReturn = Search.newInstance();
+				toReturn = Details.newInstance();
 				break;
 			case 2:
-				toReturn = Map.newInstance();
+				toReturn = Graph.newInstance();
 				break;
 			}
 			return toReturn;
@@ -179,22 +185,19 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
 		@Override
 		public int getCount() {
-			// Show 2 total pages.
 			return 2;
 		}
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return context.getString(R.string.title_search).toUpperCase(l);
+				return "Listado";
 			case 1:
-				return context.getString(R.string.title_map).toUpperCase(l);
+				return "Gráfico";
 			}
 			return null;
 		}
 	}
-
 
 }

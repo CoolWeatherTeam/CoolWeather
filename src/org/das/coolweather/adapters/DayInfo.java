@@ -1,17 +1,18 @@
 package org.das.coolweather.adapters;
 
 public class DayInfo {
-	private String imageSrc, 
+	private String day,
+		imageSrc, 
 		tempMin, 
 		tempMax, 
 		wind, 
 		clouds, 
 		rain, 
-		pressure,day;
+		pressure;
 	
 	public DayInfo(String day, String imageSrc, String tempMin, 
 			String tempMax, String wind, String clouds, String rain, String pressure) {
-		this.day=day;
+		this.day = day;
 		this.imageSrc = imageSrc;
 		this.tempMin = tempMin;
 		this.tempMax = tempMax;
@@ -21,7 +22,7 @@ public class DayInfo {
 		this.pressure = pressure;
 		
 	}
-
+	
 	public String getImageSrc() {
 		return imageSrc;
 	}

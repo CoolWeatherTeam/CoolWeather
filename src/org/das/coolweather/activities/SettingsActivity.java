@@ -6,13 +6,14 @@ import org.das.coolweather.utils.LaBD;
 import org.das.coolweather.utils.WeatherHttpClient;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.util.Log;
 
 public class SettingsActivity extends Activity {
 
@@ -44,7 +45,26 @@ public class SettingsActivity extends Activity {
 	        button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference arg0) { 
-                    LaBD.getMiBD(getActivity()).vaciar();
+                	AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                	dialog.setPositiveButton("Si", new OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							LaBD.getMiBD(getActivity()).vaciar();
+						}
+					});
+                	dialog.setNegativeButton("No", new OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}
+					});
+                	dialog.setCancelable(true);
+                	dialog.setTitle("Borrar favoritos");
+                	dialog.setMessage("Atencion: Esta acción no se puede deshacer.");
+                	dialog.show();
+                	
                     return true;
                 }
             });

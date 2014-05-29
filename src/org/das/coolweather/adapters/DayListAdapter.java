@@ -57,9 +57,10 @@ public class DayListAdapter extends BaseAdapter {
         TextView rain = (TextView)convertView.findViewById(R.id.txtRainDay);
         TextView pressure = (TextView)convertView.findViewById(R.id.txtPressureDay);
         TextView clouds = (TextView)convertView.findViewById(R.id.txtCloudsDay);
-
+        
         DayInfo aDay = daysInfo.get(position);
-        day.setText(aDay.getDay().toString());
+        
+        day.setText(aDay.getDay());
         tempMin.setText(aDay.getTempMin().toString() + " º");
         tempMin.setTextColor(Color.BLUE);
         tempMin.setTypeface(null,Typeface.BOLD);
