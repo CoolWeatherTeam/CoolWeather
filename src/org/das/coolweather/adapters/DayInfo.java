@@ -22,15 +22,15 @@ public class DayInfo {
 		this.pressure = pressure;
 		
 	}
-
-	public String getDay() {
-		return day;
-	}
 	
 	public String getImageSrc() {
 		return imageSrc;
 	}
-
+	
+	public String getDay() {
+		return day;
+	}
+	
 	public String getTempMin() {
 		return tempMin;
 	}
