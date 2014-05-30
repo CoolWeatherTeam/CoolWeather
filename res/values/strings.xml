@@ -28,9 +28,6 @@
     <string name="MarkerInPosition">Marker en la posicion</string>
     <string name="deleted"> borrado</string>
     <string name="title_activity_details_activity_host">Detalles</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    <string name="title_activity_graph">Graph</string>
-
+	<string name="title_activity_prevision">Previsión semanal</string>
+    <string name="title_activity_chart">Gráfico temperaturas</string>
 </resources>

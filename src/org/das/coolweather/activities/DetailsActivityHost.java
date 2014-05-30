@@ -122,9 +122,9 @@ public class DetailsActivityHost extends Activity implements
 			String tempMax = hoy.getJSONObject("temp").getString("max");
 			String tempMin = hoy.getJSONObject("temp").getString("min");
 			String weather = hoy.getJSONArray("weather").getJSONObject(0).getString("description");
-			result = getApplicationContext().getString(R.string.TodayIn) + " " + ciudad + ", " + pais + 
-					getApplicationContext().getString(R.string.ThereIsAPrevision)+ " " + weather +
-					getApplicationContext().getString(R.string.AndTempMax) + " " + tempMax + 
+			result = getApplicationContext().getString(R.string.TodayIn) + " " + ciudad + ", " + pais + " " +
+					getApplicationContext().getString(R.string.ThereIsAPrevision)+ " " + weather + " " +
+					getApplicationContext().getString(R.string.AndTempMax) + " " + tempMax + " " +
 					getApplicationContext().getString(R.string.AndTempMin) + " " + tempMin;
 			
 		} catch (JSONException e) {
@@ -192,9 +192,9 @@ public class DetailsActivityHost extends Activity implements
 		public CharSequence getPageTitle(int position) {
 			switch (position) {
 			case 0:
-				return "Listado";
+				return getString(R.string.title_activity_prevision);
 			case 1:
-				return "Gráfico";
+				return getString(R.string.title_activity_chart);
 			}
 			return null;
 		}

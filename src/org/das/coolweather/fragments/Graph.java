@@ -51,50 +51,30 @@ public class Graph extends Fragment {
 	    
         //Definimos la grafica
 		GraphView graphView =l1;
-        float[] maximas=new float[7],minimas=new float[7];
-    	JSONArray hoy = data.getJSONArray("list");
-    	for(int i=0;i<hoy.length();i++){
-			
-			maximas[i] = Float.parseFloat(hoy.getJSONObject(i).getJSONObject("temp").getString("max"));
-			minimas[i] = Float.parseFloat(hoy.getJSONObject(i).getJSONObject("temp").getString("min"));
+    	JSONArray datosSemana = data.getJSONArray("list");
     	
+    	GraphViewData[] maxData = new GraphViewData[datosSemana.length()];
+    	GraphViewData[] minData = new GraphViewData[datosSemana.length()];
+    	for(int i = 0; i < datosSemana.length(); i++){
+			
+			double maxima = Double.parseDouble(datosSemana.getJSONObject(i).getJSONObject("temp").getString("max"));
+			double minima = Double.parseDouble(datosSemana.getJSONObject(i).getJSONObject("temp").getString("min"));
+			maxData[i] = new GraphViewData(i, maxima);
+			minData[i] = new GraphViewData(i, minima);
     	}
-        
-        
-        //Definimos los datos de la linea correspondiente a las temperaturas maximas
-        GraphViewData[] gr1= new GraphViewData[] {
-           	 new GraphViewData(0,maximas[0]),
-           	 new GraphViewData(1,maximas[1]),
-           	 new GraphViewData(2,maximas[2]),
-           	 new GraphViewData(3,maximas[3]),
-           	 new GraphViewData(4,maximas[4]),
-           	 new GraphViewData(5,maximas[5]),
-           	 new GraphViewData(6,maximas[6]),
-        };
-        
+       
 
         //Creamos un estilo para la linea
         GraphViewSeriesStyle estilo= new GraphViewSeriesStyle(Color.RED,4);
         //Los añadimos a una serie, objeto que se añade al grafico
-        GraphViewSeries maximos = new GraphViewSeries(getActivity().getString(R.string.Maximus), estilo, gr1);
+        GraphViewSeries maximos = new GraphViewSeries(getActivity().getString(R.string.Maximus), estilo, maxData);
         
         //annadimos los datos 
         graphView.addSeries(maximos);
-	        
-	        
-	        //Definimos los datos de la linea correspondiente a las temperaturas maximas
-        gr1= new GraphViewData[] {
-           	 new GraphViewData(0,minimas[0]),
-           	 new GraphViewData(1,minimas[1]),
-           	 new GraphViewData(2,minimas[2]),
-           	 new GraphViewData(3,minimas[3]),
-           	 new GraphViewData(4,minimas[4]),
-           	 new GraphViewData(5,minimas[5]),
-           	 new GraphViewData(6,minimas[6]),
-        };
+        
         estilo = new GraphViewSeriesStyle(Color.WHITE, 4);
         //Los añadimos a una serie, objeto que se añade al grafico
-        GraphViewSeries minimos = new GraphViewSeries(getActivity().getString(R.string.Minimus),estilo,gr1);
+        GraphViewSeries minimos = new GraphViewSeries(getActivity().getString(R.string.Minimus), estilo, minData);
         
         //annadimos los datos 
         graphView.addSeries(minimos); 
@@ -114,9 +94,9 @@ public class Graph extends Fragment {
         	//Color de la gui vertical
         graphView.getGraphViewStyle().setVerticalLabelsColor(Color.CYAN);
         	//Numero de divisiones verticales (Una por dato)
-        graphView.getGraphViewStyle().setNumVerticalLabels(gr1.length);
+        graphView.getGraphViewStyle().setNumVerticalLabels(maxData.length);
         	//numero de divisiones horizontales ( una por dia de la semana)
-        graphView.getGraphViewStyle().setNumHorizontalLabels(7);
+//        graphView.getGraphViewStyle().setNumHorizontalLabels(7);
         	//Mostramos la leyenda
         graphView.setShowLegend(true);
         	//Posicionamos el la leyenda en la parte inferior derecha
@@ -124,13 +104,8 @@ public class Graph extends Fragment {
         	//Definimos la guia horizontal con los dias de la semana 
         graphView.setHorizontalLabels(calcularDias());
     		//Posicionamos la camara en el centro de la grafica
-        graphView.setViewPort(0, 6);
-    		//Permitimos la opcion de desplazar el grafico
-        graphView.setScrollable(true);
-        	//Permitimos la opcion de re-escalar el grafico
-        graphView.setScalable(true);
-        graphView.setMinimumHeight(500);
-		graphView.setMinimumWidth(300);
+//        graphView.setMinimumHeight(500);
+//		graphView.setMinimumWidth(300);
 			
 		LinearLayout layout = (LinearLayout) rootView.findViewById(R.id.graph);
 		layout.addView(graphView);
