@@ -6,18 +6,18 @@ public class DayInfo {
 		tempMin, 
 		tempMax, 
 		wind, 
-		clouds, 
+		humidity, 
 		rain, 
 		pressure;
 	
 	public DayInfo(String day, String imageSrc, String tempMin, 
-			String tempMax, String wind, String clouds, String rain, String pressure) {
+			String tempMax, String wind, String humidity, String rain, String pressure) {
 		this.day = day;
 		this.imageSrc = imageSrc;
 		this.tempMin = tempMin;
 		this.tempMax = tempMax;
 		this.wind = wind;
-		this.clouds = clouds;
+		this.humidity = humidity;
 		this.rain = rain;
 		this.pressure = pressure;
 		
@@ -43,8 +43,8 @@ public class DayInfo {
 		return wind;
 	}
 
-	public String getClouds() {
-		return clouds;
+	public String getHumidity() {
+		return humidity;
 	}
 
 	public String getRain() {

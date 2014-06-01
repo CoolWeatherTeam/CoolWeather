@@ -56,7 +56,7 @@ public class DayListAdapter extends BaseAdapter {
         TextView wind = (TextView)convertView.findViewById(R.id.txtWindDay);
         TextView rain = (TextView)convertView.findViewById(R.id.txtRainDay);
         TextView pressure = (TextView)convertView.findViewById(R.id.txtPressureDay);
-        TextView clouds = (TextView)convertView.findViewById(R.id.txtCloudsDay);
+        TextView humidity = (TextView)convertView.findViewById(R.id.txtHumidityDay);
         
         DayInfo aDay = daysInfo.get(position);
         
@@ -70,7 +70,7 @@ public class DayListAdapter extends BaseAdapter {
         wind.setText(aDay.getWind() + " m/s");
         rain.setText(aDay.getRain().toString() + " mm");
         pressure.setText(aDay.getPressure().toString() + " hPa");
-        clouds.setText(aDay.getClouds().toString() + " %");
+        humidity.setText(aDay.getHumidity().toString() + " %");
         image.setImageDrawable(context.getResources().getDrawable(context.getResources().getIdentifier("drawable/a" + aDay.getImageSrc(), "drawable", context.getPackageName())));
 //        image.setBackgroundDrawable(R.drawable.d);
         //image.setImageResource(R.drawable.d);

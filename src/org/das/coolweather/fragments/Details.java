@@ -58,7 +58,7 @@ public class Details extends Fragment {
 		for(int i = 0; i < days.length(); i++) {
 			JSONObject day = days.getJSONObject(i);
 			
-			String clouds = day.getString("clouds"), 
+			String humidity = day.getString("humidity"), 
 				pressure = day.getString("pressure"), 
 				speed = day.getString("speed"), 
 				tempMax = day.getJSONObject("temp").getString("max"), 
@@ -73,7 +73,7 @@ public class Details extends Fragment {
 			String fecha = getDate(i);
 			
 			String icon = day.getJSONArray("weather").getJSONObject(0).getString("icon");
-			DayInfo aDay = new DayInfo(fecha, icon, tempMin, tempMax, speed, clouds, rain, pressure);
+			DayInfo aDay = new DayInfo(fecha, icon, tempMin, tempMax, speed, humidity, rain, pressure);
 			listDays.add(aDay);				
 		}
 
